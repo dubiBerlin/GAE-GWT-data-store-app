@@ -1,0 +1,9 @@
+/** Add css rules here for your application. */
+
+
+/** Example rules used by the template application (remove for your app) */
+.tableCell{
+	border-bottom: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #3498DB;
+}
