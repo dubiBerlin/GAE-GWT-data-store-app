@@ -1,0 +1,93 @@
+1. 	Die User Objekte wurden in die DB eingefügt
+
+2. 	Das Password wird bei der Registrierung und im Login
+   	verschlüsselt und verschlüsselt zum Server geschickt.
+   
+   
+3.  Implementierung der Cookies und der Session bei einem Login.
+	Verlauf:
+	
+	Server Side
+	- Username und Passwort(verschlüsselt) werden zum Server geschickt
+	- LoginUser Objekt wird erstellt dass nur aus dem username und pw besteht
+	- HttpServletRequest Objekt wird erstellt
+	- HttpSession Objekt wird erstellt durch das HttpServletRequest
+	- Das HttpSession Objekt generiert mit der Methode getId() eine SESSION_ID als String
+	- Erzeugte SESSION_ID in loginUser.setSessionID(SESSION_ID) einfügen 
+	- LoginUser Objekt wird in die Session als Attribut eingefügt session.setAttribute("user",LoginUser Objekt)
+	- LoginUser Objekt wird zum Client zurück geschickt als response der RPC Anfrage
+	- 
+	Client Side
+	- Client empfängt LoginUser Objekt vom Server
+	- erstellt final variable DURATRION = 1000*60*60*24*1;
+	- erstellt Date Objekt und fügt DURATION ein: Date expires = new Date(System.currentTimeMillis() + DURATION);
+	- Setzt den Cookie : Cookies.setCookie("sid", sessionID, expires, null, "/", false);
+
+4.	GUI Eine DetailView impplementieren von der alle anderen Views der App erben, weil alle Seiten gleich
+    aufgebaut sind.
+    
+5.  Das Widget: AddTopicWithTitle implementieren, welches ab Seite2 aufgerufen wird.
+
+
+6.	Die Entity von Seite2 bis Seite5 zwei setzt sich zusammen aus "vorEintrag/side" z.B. "bibel/side2". 
+	Der Key dieser Entity ist der username.
+	Also Beispiel: 
+					Entity("bibel/side2", mira)
+	Die Informationen zum der Entities von Seite2- Seite5 werden im Side2to5Entity Objekt gespeichert.
+	Wird ein neues Eintrag auf Seite2 - Seite5 erstellt wird dieses Objekt zum Server gesendet
+	damit er weiß wie die Entity auf zu bauen ist
+	
+	Auf Seite2 bis Seite5 zwei besteht jeder Eintrag aus einem Title, Content, Quelle die zur Darstellung
+	in der CellList im Object CellContent gespeichert werden.
+	Zur Übetragung zum Server und zurück werden die Informationen in dem TitleContent Object gespeichert welches von 
+	Serializible erbt. Das TitleContent Object enthält NUR die Inhalte die in die Property einer Entity
+	eingefügt werden. 
+		
+	Die gesendete Entity setzt sich komplett wie folgt zusammen:
+		
+		Side2to5Entity ->   Entity("bibel/side2", mira)
+		TitleContent   ->   property: (title:  irgend ein titel)
+							property: (content: ganz langer Text)
+							property: (source: quelle zum content)
+	
+	
+7. Die beiden Widgets AddTopic und AddTopicWithTitle
+   nach dem MVP-Muster auseinander nehmen.
+   
+   
+8. Versuch die gesammte Logik in die DetailActivity zu implementieren.
+   Das umfasst:
+   			- Aufruf des AddTopicWithTitle-Widgets	
+			- das erstellen des Side2to5Entity Objekts 
+			- das Side2to5Entity Objekt an das aufgerufene AddTopicWithTitle-Widget übergeben
+			- AddTopicWithTitle-Widget gibt die Liste von Einträgen an die Detailactivity zurück
+			- Einträge in die CellList rendern
+	Was sich von Side2 - Side5 unterscheidet ist das PlaceToken
+	
+	
+
+
+
+
+
+Problem:
+1. möchte man einen String (hier Content) speichern der mehr als 500 Zeichen enthält, wird Exception geworfen
+   dieser nur verkürzt, da DS nur Strings mit maximaler Länge von 500 Zeichen speichert.
+  
+ Behebung: 
+ 	Serverseitig 
+ 	speichern des Strings
+ 			falls string.length > 500 
+ 				dann String in Text Object speichern 
+ 				Text object in Entity.property einfügen
+ 				und Text Object in DS einfügen
+ 			sonst
+ 				String in entity.property einfügen
+
+	auslesen des Strings
+			falls property instance von Text
+				Text in String umwandeln
+			sonst
+				String einfach einfügen
+				
+				
