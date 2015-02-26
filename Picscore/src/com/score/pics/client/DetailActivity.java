@@ -15,8 +15,7 @@ import com.googlecode.mgwt.ui.client.widget.list.celllist.CellSelectedEvent;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellSelectedHandler;
 import com.score.pics.client.events.AddTopicSide2to5Event;
 import com.score.pics.client.events.AddTopicSide2to5EventHandler;
-import com.score.pics.client.side4.SidePlace4;
-import com.score.pics.client.widgets.AddTopicWithTitle;
+import com.score.pics.client.widgets.AddTopicSide2to5Widget;
 import com.score.pics.shared.CellContent;
 import com.score.pics.shared.Sides2to5Entity;
 import com.score.pics.shared.TitleContentEntry;
@@ -60,7 +59,7 @@ public class DetailActivity extends MGWTAbstractActivity {
 	public void setHandler(){
 		addHandlerRegistration(view.getImageButton().addTapHandler(new TapHandler() {
 			public void onTap(TapEvent event) {
-				AddTopicWithTitle ar = new AddTopicWithTitle(se, eventBus, clientFactory);
+				AddTopicSide2to5Widget ar = new AddTopicSide2to5Widget(se, eventBus, clientFactory);
 				ar.show();
 				
 			}

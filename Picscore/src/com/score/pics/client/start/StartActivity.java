@@ -21,6 +21,8 @@ import com.score.pics.client.GUIHelper;
 import com.score.pics.client.events.StartAddTopic;
 import com.score.pics.client.events.StartaddTopicEventHandler;
 import com.score.pics.client.side2.SidePlace2;
+import com.score.pics.client.widgets.AddTopicView;
+import com.score.pics.client.widgets.AddTopicViewImpl;
 import com.score.pics.client.widgets.AddTopicWidget;
 
 

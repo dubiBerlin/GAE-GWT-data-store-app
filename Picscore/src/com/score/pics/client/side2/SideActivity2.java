@@ -25,7 +25,8 @@ import com.score.pics.client.events.AddTopicSide2to5EventHandler;
 import com.score.pics.client.events.StartAddTopic;
 import com.score.pics.client.events.StartaddTopicEventHandler;
 import com.score.pics.client.side3.SidePlace3;
-import com.score.pics.client.widgets.AddTopicWithTitle;
+import com.score.pics.client.widgets.AddTopicSide2to5ViewImpl;
+import com.score.pics.client.widgets.AddTopicSide2to5Widget;
 import com.score.pics.shared.AppResources;
 import com.score.pics.shared.CellContent;
 import com.score.pics.shared.Sides2to5Entity;
@@ -87,7 +88,7 @@ public class SideActivity2 extends MGWTAbstractActivity {
 		if(sessionID!=null){
 			addHandlerRegistration(view.getImageButton().addTapHandler(new TapHandler() {
 				public void onTap(TapEvent event) {
-					AddTopicWithTitle ar = new AddTopicWithTitle(se, eventBus, clientFactory);
+					AddTopicSide2to5Widget ar = new AddTopicSide2to5Widget(se, eventBus, clientFactory);
 					ar.show();
 				}
 			}));

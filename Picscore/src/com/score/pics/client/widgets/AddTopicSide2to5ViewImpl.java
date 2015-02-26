@@ -1,74 +1,48 @@
 package com.score.pics.client.widgets;
 
-import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Style.BorderStyle;
 import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.user.client.Cookies;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Label;
-import com.google.web.bindery.event.shared.EventBus;
-import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
-import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
-import com.googlecode.mgwt.ui.client.widget.animation.Animation;
-import com.googlecode.mgwt.ui.client.widget.animation.Animations;
+import com.google.gwt.user.client.ui.Widget;
+import com.googlecode.mgwt.dom.client.event.tap.HasTapHandlers;
 import com.googlecode.mgwt.ui.client.widget.button.Button;
 import com.googlecode.mgwt.ui.client.widget.button.image.CancelImageButton;
-import com.googlecode.mgwt.ui.client.widget.dialog.overlay.DialogOverlay;
 import com.googlecode.mgwt.ui.client.widget.header.HeaderPanel;
 import com.googlecode.mgwt.ui.client.widget.input.MTextArea;
 import com.googlecode.mgwt.ui.client.widget.input.MTextBox;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexPanel;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexPropertyHelper.Alignment;
-import com.score.pics.client.ClientFactory;
-import com.score.pics.client.EntryService;
-import com.score.pics.client.EntryServiceAsync;
 import com.score.pics.client.GUIHelper;
-import com.score.pics.client.events.AddTopicSide2to5Event;
 import com.score.pics.client.resources.AppBundle;
-import com.score.pics.shared.Sides2to5Entity;
-import com.score.pics.shared.TitleContentEntry;
 
-public class AddTopicWithTitle extends DialogOverlay {
+
+public class AddTopicSide2to5ViewImpl implements AddTopicSide2to5View{
 
 	private MTextBox  titleTxtBox, sourceBox;
 	private MTextArea textBox;
 	private Button saveBttn;
 	private Label distance1, distance2, distance3, distance4,distance5, resultMessage;
 	private Label titleHeader, contentHeader, sourceHeader;
-	private EventBus eventBus;
 	private CancelImageButton close;
-	private ClientFactory clientFactory;
+	private FlexPanel mainPnl, body;
+	private HeaderPanel headerPnl;
 	
-//	private GAEEntryServiceAsync service = GWT.create(GAEEntryService.class);
-	private EntryServiceAsync service = GWT.create(EntryService.class);
-	private Sides2to5Entity se;
-	
-	
-	public AddTopicWithTitle(final Sides2to5Entity se, final EventBus evenbus, final ClientFactory clientFactory) {
+	public AddTopicSide2to5ViewImpl() {
 		
 		AppBundle.INSTANCE.getCss().ensureInjected();
 		
-		this.clientFactory = clientFactory;
-		this.eventBus = evenbus;
-		this.se = se;
-		
-		FlexPanel mainPnl = new FlexPanel();
+		mainPnl = new FlexPanel();
 		mainPnl.getElement().getStyle().setBackgroundColor("white");
 		mainPnl.setSize("100%", "100%");
 		mainPnl.setAlignment(Alignment.CENTER);
 		
+		//headerPnl = new HeaderPanel();
 		
 		close = new CancelImageButton();
 		close.getElement().getStyle().setBackgroundColor("#3498DB");
-		HeaderPanel headerPnl = GUIHelper.getHeaderPanel("new entry for "+se.getEintrag(), close, false);
 		
-		close.addTapHandler(new TapHandler() {
-			public void onTap(TapEvent event) {
-				hide();
-			}
-		});
 		
-		FlexPanel body = new FlexPanel();
+		body = new FlexPanel();
 		body.setAlignment(Alignment.CENTER);
 		body.setWidth("100%");
 		
@@ -102,29 +76,7 @@ public class AddTopicWithTitle extends DialogOverlay {
 		saveBttn.setImportant(true);
 		saveBttn.setWidth("90%");
 		
-		final String sessionID = Cookies.getCookie("sid");
-		
-		if(sessionID!=null){
-			saveBttn.addTapHandler(new TapHandler() {
-				public void onTap(TapEvent event) {
-					if(titleTxtBox.getText()!=null && !titleTxtBox.getText().equals("")){
-						
-						TitleContentEntry tce = getTitleContentEntryObject();
-						
-						service.saveTitleContentObject(se, tce, new AsyncCallback<TitleContentEntry>() {
-							public void onSuccess(TitleContentEntry result) {
-								
-								evenbus.fireEvent(new AddTopicSide2to5Event(result));
-								
-							}
-							public void onFailure(Throwable caught) {}
-						});
-					}
-				}
 
-			});
-		}
-		
 		
 		distance3 = GUIHelper.distance10PX();
 		saveBttn.getElement().getStyle().setBorderColor("white");
@@ -147,30 +99,54 @@ public class AddTopicWithTitle extends DialogOverlay {
 		body.add(saveBttn);
 		body.add(distance4);
 		body.add(resultMessage);
-		mainPnl.add(headerPnl);
-		mainPnl.add(body);
+//		mainPnl.add(headerPnl);
 		
-		add(mainPnl);
 	}
 
 
 	@Override
-	protected Animation getShowAnimation() {
-		return Animations.DISSOLVE;
-	}
-
-	@Override
-	protected Animation getHideAnimation() {
-		return Animations.DISSOLVE_REVERSE;
+	public Widget asWidget() {
+		return mainPnl;
 	}
 	
+	@Override
+	public HasTapHandlers getCancelImageButton() {
+		return close;
+	}
 
-	private TitleContentEntry getTitleContentEntryObject() {
-		TitleContentEntry tce = new TitleContentEntry();
-		tce.setTitle(titleTxtBox.getText());
-		tce.setContent(textBox.getText());
-		tce.setQuelle(sourceBox.getText());
-		return tce;
+	@Override
+	public HasTapHandlers getSaveButton() {
+		return saveBttn;
+	}
+
+	@Override
+	public String getTitle() {
+		return this.titleTxtBox.getText();
+	}
+
+	@Override
+	public String getContent() {
+		return textBox.getText();
+	}
+
+	@Override
+	public String getSource() {
+		return sourceBox.getText();
+	}
+
+
+
+
+	@Override
+	public void setMessage(String text) {
+		resultMessage.setText(text);
+	}
+
+	@Override
+	public void setHeaderTitle(String text) {
+		headerPnl = GUIHelper.getHeaderPanel("new entry for "+text, close, false);
+		mainPnl.add(headerPnl);
+		mainPnl.add(body);
 	}
 
 }
