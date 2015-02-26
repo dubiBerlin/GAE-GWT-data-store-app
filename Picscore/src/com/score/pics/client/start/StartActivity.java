@@ -95,17 +95,6 @@ public class StartActivity extends MGWTAbstractActivity {
 	
 	private void getStartList(String username){
 		
-//		service.getTopicsOnStartSide(username, new AsyncCallback<List<String>>() {
-//			public void onSuccess(List<String> result) {
-//				list = result;
-//				view.rendet(list);
-//				view.refresh();
-//				GUIHelper.setBackGroundColorInCellList(view.getCellListWidget(), list);
-//			}
-//			
-//			public void onFailure(Throwable caught) {}
-//		});
-		
 		entryService.getTopicsStartSide(username, new AsyncCallback<List<String>>() {
 			
 			@Override

@@ -99,15 +99,6 @@ public class SideActivity2 extends MGWTAbstractActivity {
 				}
 			}));
 			
-			eventBus.addHandler(StartAddTopic.TYPE, new StartaddTopicEventHandler(){
-				public void speichern(StartAddTopic event) {
-//					view.clear();
-//					view.rendet(list);
-//					view.refresh();
-//					GUIHelper.setBackGroundColorInCellList(view.getCellListWidget(), list);
-				}
-			});
-			
 			eventBus.addHandler(AddTopicSide2to5Event.TYPE, new AddTopicSide2to5EventHandler() {
 				public void speichern(AddTopicSide2to5Event event) {
 					

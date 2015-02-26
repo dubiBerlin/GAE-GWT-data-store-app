@@ -8,6 +8,8 @@ import com.score.pics.client.login.LoginPlace;
 import com.score.pics.client.register.RegisterPlace;
 import com.score.pics.client.side2.SidePlace2;
 import com.score.pics.client.side3.SidePlace3;
+import com.score.pics.client.side4.SidePlace4;
+import com.score.pics.client.side5.SidePlace5;
 import com.score.pics.client.start.StartPlace;
 
 public class PhoneAnimationMapper implements AnimationMapper {
@@ -33,6 +35,19 @@ public class PhoneAnimationMapper implements AnimationMapper {
 			return Animations.FADE;
 		}
 		if(newPlace instanceof SidePlace2 && oldPlace instanceof SidePlace3){
+			return Animations.FADE_REVERSE;
+		}
+		
+		if(newPlace instanceof SidePlace3 && oldPlace instanceof SidePlace4){
+			return Animations.FADE_REVERSE;
+		}
+		if(newPlace instanceof SidePlace4 && oldPlace instanceof SidePlace3){
+			return Animations.FADE;
+		}
+		if(newPlace instanceof SidePlace5 && oldPlace instanceof SidePlace4){
+			return Animations.FADE;
+		}
+		if(newPlace instanceof SidePlace4 && oldPlace instanceof SidePlace5){
 			return Animations.FADE_REVERSE;
 		}
 		return null;

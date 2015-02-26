@@ -11,6 +11,10 @@ import com.score.pics.client.side2.SideView2;
 import com.score.pics.client.side2.SideViewImpl2;
 import com.score.pics.client.side3.SideView3;
 import com.score.pics.client.side3.SideViewImpl3;
+import com.score.pics.client.side4.SideView4;
+import com.score.pics.client.side4.SideViewImpl4;
+import com.score.pics.client.side5.SideView5;
+import com.score.pics.client.side5.SideViewImpl5;
 import com.score.pics.client.start.StartView;
 import com.score.pics.client.start.StartViewImpl;
 
@@ -23,6 +27,8 @@ public class ClientFactoryImpl implements ClientFactory {
 	private StartView sv;
 	private SideView2 sv2;
 	private SideView3 sv3;
+	private SideView4 sv4;
+	private SideView5 sv5;
 	private String username;
 	private String actualSide;
 	
@@ -96,6 +102,22 @@ public class ClientFactoryImpl implements ClientFactory {
 		}
 		return sv3;
 	}
+	
+	@Override
+	public SideView4 getSide4ViewImpl() {
+		if(sv4==null){
+			sv4 = new SideViewImpl4();
+		}
+		return sv4;
+	}
+	
+	@Override
+	public SideView5 getSide5ViewImpl() {
+		if(sv5==null){
+			sv5 = new SideViewImpl5();
+		}
+		return sv5;
+	}
 
 
 	@Override
@@ -108,5 +130,8 @@ public class ClientFactoryImpl implements ClientFactory {
 	public void setSideLocation(String text) {
 		actualSide = text;
 	}
+
+
+	
 	
 }

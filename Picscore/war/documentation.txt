@@ -50,24 +50,24 @@
 							property: (content: ganz langer Text)
 							property: (source: quelle zum content)
 	
-	
-7. Die beiden Widgets AddTopic und AddTopicWithTitle
-   nach dem MVP-Muster auseinander nehmen.
+
    
    
-8. Versuch die gesammte Logik in die DetailActivity zu implementieren.
+7. Versuch die gesammte Logik in die DetailActivity zu implementieren.
    Das umfasst:
-   			- Aufruf des AddTopicWithTitle-Widgets	
 			- das erstellen des Side2to5Entity Objekts 
+			- Aufruf des AddTopicWithTitle-Widgets	
 			- das Side2to5Entity Objekt an das aufgerufene AddTopicWithTitle-Widget übergeben
 			- AddTopicWithTitle-Widget gibt die Liste von Einträgen an die Detailactivity zurück
 			- Einträge in die CellList rendern
 	Was sich von Side2 - Side5 unterscheidet ist das PlaceToken
 	
 	
+	
+8. Die beiden Widgets AddTopic und AddTopicWithTitle
+   nach dem MVP-Muster auseinander nehmen.
 
-
-
+9. dependency injections implementieren
 
 
 Problem:

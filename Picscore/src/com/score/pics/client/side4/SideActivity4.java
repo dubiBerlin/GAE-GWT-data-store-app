@@ -1,37 +1,35 @@
-package com.score.pics.client.side3;
+package com.score.pics.client.side4;
 
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.web.bindery.event.shared.EventBus;
 import com.score.pics.client.ClientFactory;
 import com.score.pics.client.DetailActivity;
-import com.score.pics.client.side4.SidePlace4;
+import com.score.pics.client.side5.SidePlace5;
 import com.score.pics.shared.AppResources;
 
-public class SideActivity3 extends DetailActivity {
+public class SideActivity4 extends DetailActivity {
 
-	private SideView3 view;
+	private SideView4 view;
 	private final ClientFactory clientFactory;
 	
-	public SideActivity3(ClientFactory clientFactory) {
-		super(clientFactory, clientFactory.getSide3ViewImpl());
+	public SideActivity4(ClientFactory clientFactory) {
+		super(clientFactory, clientFactory.getSide4ViewImpl());
 		this.clientFactory = clientFactory;
 	}
-	
+
 
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
 		super.start(panel, eventBus);
 		
-		view=clientFactory.getSide3ViewImpl();
+		view=clientFactory.getSide4ViewImpl();
 		
 		
-		SidePlace3 place = (SidePlace3)clientFactory.getPlaceController().getWhere();
-		
-		String token = place.getToken();
+		SidePlace4 place = (SidePlace4)clientFactory.getPlaceController().getWhere();
 		
 		
-		getStartList(token, AppResources.side3Identifier());
+		getStartList(place.getToken(), AppResources.side3Identifier());
 		
 		String sessionID = Cookies.getCookie("sid");
 		
@@ -39,15 +37,14 @@ public class SideActivity3 extends DetailActivity {
 			setHandler();
 		}
 		
-		
-		view.setHeaderTitle(token);
+		view.setHeaderTitle(place.getToken());
 		
 		panel.setWidget(view);
 	}
 	
-	
+
 	@Override
 	public void goToNextPlace(String place) {
-		clientFactory.getPlaceController().goTo(new SidePlace4(place));
+		clientFactory.getPlaceController().goTo(new SidePlace5(place));
 	}
 }

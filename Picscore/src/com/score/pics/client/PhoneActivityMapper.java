@@ -11,6 +11,10 @@ import com.score.pics.client.side2.SideActivity2;
 import com.score.pics.client.side2.SidePlace2;
 import com.score.pics.client.side3.SideActivity3;
 import com.score.pics.client.side3.SidePlace3;
+import com.score.pics.client.side4.SideActivity4;
+import com.score.pics.client.side4.SidePlace4;
+import com.score.pics.client.side5.SideActivity5;
+import com.score.pics.client.side5.SidePlace5;
 import com.score.pics.client.start.StartActivity;
 import com.score.pics.client.start.StartPlace;
 
@@ -43,6 +47,12 @@ public class PhoneActivityMapper implements ActivityMapper {
 		}
 		if(place instanceof SidePlace3){
 			return new SideActivity3(clientFactory);
+		}
+		if(place instanceof SidePlace4){
+			return new SideActivity4(clientFactory);
+		}
+		if(place instanceof SidePlace5){
+			return new SideActivity5(clientFactory);
 		}
 		return null;
 	}
