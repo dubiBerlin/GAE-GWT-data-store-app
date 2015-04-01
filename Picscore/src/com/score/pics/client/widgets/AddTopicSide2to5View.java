@@ -13,5 +13,8 @@ public interface AddTopicSide2to5View extends IsWidget {
 	public void setMessage(String text);
 	public void setHeaderTitle(String text);
 	
-
+	// Für den Edit Einsatz
+	public void setTitle(String text);
+	public void setContent(String text);
+	public void setSource(String text);
 }

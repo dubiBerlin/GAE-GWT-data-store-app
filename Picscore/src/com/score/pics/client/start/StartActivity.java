@@ -3,6 +3,7 @@ package com.score.pics.client.start;
 import java.util.List;
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
@@ -15,14 +16,10 @@ import com.googlecode.mgwt.ui.client.widget.list.celllist.CellSelectedHandler;
 import com.score.pics.client.ClientFactory;
 import com.score.pics.client.EntryService;
 import com.score.pics.client.EntryServiceAsync;
-import com.score.pics.client.GAEEntryService;
-import com.score.pics.client.GAEEntryServiceAsync;
 import com.score.pics.client.GUIHelper;
 import com.score.pics.client.events.StartAddTopic;
 import com.score.pics.client.events.StartaddTopicEventHandler;
 import com.score.pics.client.side2.SidePlace2;
-import com.score.pics.client.widgets.AddTopicView;
-import com.score.pics.client.widgets.AddTopicViewImpl;
 import com.score.pics.client.widgets.AddTopicWidget;
 
 
@@ -44,11 +41,12 @@ public class StartActivity extends MGWTAbstractActivity {
 	public void start(AcceptsOneWidget panel, final EventBus eventBus) {
 		view = clientFactory.getStartViewImpl();
 		
-		
 		StartPlace place = (StartPlace)clientFactory.getPlaceController().getWhere();
 		
 		view.setHeaderText(place.getToken());
 		
+		clientFactory.pushHistoryTracker(clientFactory.getUserName());
+				
 		getStartList(place.getToken());
 		
 		String sessionID = Cookies.getCookie("sid");
@@ -84,7 +82,7 @@ public class StartActivity extends MGWTAbstractActivity {
 			public void onCellSelected(CellSelectedEvent event) {
 				
 				int index = event.getIndex();
-				
+				//cl
 				clientFactory.getPlaceController().goTo(new SidePlace2(list.get(index)));
 				
 			}
@@ -112,5 +110,6 @@ public class StartActivity extends MGWTAbstractActivity {
 		});
 		
 	}
+	
 
 }

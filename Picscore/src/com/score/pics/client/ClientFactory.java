@@ -1,5 +1,7 @@
 package com.score.pics.client;
 
+import java.util.List;
+
 import com.google.gwt.place.shared.PlaceController;
 import com.google.web.bindery.event.shared.EventBus;
 import com.score.pics.client.login.LoginView;
@@ -30,15 +32,24 @@ public interface ClientFactory {
 	
 	public SideView5 getSide5ViewImpl();
 	
+//	public AddTopicView getTopicViewWidget();
+	
 	public String getUserName();
 	
 	public void setUserName(String text);
-	
-	
 	
 	public String getSideLocation();
 	
 	public void setSideLocation(String text);
 	
 	
+	/* Necessary for the ancestorpath for the entities in DS */
+	public void setIDOFPreviousSide(String text);
+	
+	public String getIDOFPreviousSide();
+	
+	/*  */
+	public void pushHistoryTracker(String key);
+	public List<String> getAncestorPath();
+	public void deleteLastTokenAncestorPath();
 }

@@ -149,4 +149,22 @@ public class AddTopicSide2to5ViewImpl implements AddTopicSide2to5View{
 		mainPnl.add(body);
 	}
 
+
+	@Override
+	public void setTitle(String text) {
+		this.titleTxtBox.setText(text);
+	}
+
+
+	@Override
+	public void setContent(String text) {
+		this.textBox.setText(text);
+	}
+
+
+	@Override
+	public void setSource(String text) {
+		this.sourceBox.setText(text);
+	}
+
 }

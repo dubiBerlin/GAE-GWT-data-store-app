@@ -13,7 +13,7 @@ public class StartCell implements Cell<String>{
 	public interface Template extends SafeHtmlTemplates{
 		@SafeHtmlTemplates.Template("<table width='100%'>" +
 										"<tr>" +
-											"<td align='left'><h4>{0}</h4></td>" +
+											"<td align='left'>{0}</td>" +
 										"<tr>" +
 									"</table>")
 		SafeHtml content(String content);

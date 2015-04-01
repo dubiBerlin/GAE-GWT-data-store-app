@@ -15,7 +15,7 @@ import com.score.pics.client.ClientFactory;
 import com.score.pics.client.GAEDatastoreService;
 import com.score.pics.client.GAEDatastoreServiceAsync;
 import com.score.pics.client.register.RegisterPlace;
-import com.score.pics.shared.AppResources;
+import com.score.pics.shared.StringResources;
 import com.score.pics.shared.Helper;
 import com.score.pics.shared.LoginUser;
 import com.score.pics.client.start.StartPlace;
@@ -74,7 +74,7 @@ public class LoginActivity extends MGWTAbstractActivity {
 					if(view.getPassword()!=null || !view.getPassword().trim().equals("")){
 						
 						String username = view.getUsername();
-						String password = Helper.encryptPasswort(view.getPassword(), AppResources.getGwtDesKey());
+						String password = Helper.encryptPasswort(view.getPassword(), StringResources.getGwtDesKey());
 						
 						executeLogin(username, password);
 						

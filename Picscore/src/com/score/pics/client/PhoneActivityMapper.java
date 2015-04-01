@@ -23,7 +23,6 @@ public class PhoneActivityMapper implements ActivityMapper {
 	private RegisterMobileActivity rma;
 	private LoginActivity la;
 	private StartActivity sa;
-	private SideActivity2 sa2;
 	private ClientFactory clientFactory;
 	
 	
@@ -43,7 +42,7 @@ public class PhoneActivityMapper implements ActivityMapper {
 			return getStartActivity();
 		}
 		if(place instanceof SidePlace2){
-			return getSideActivity2();
+			return new SideActivity2(clientFactory);
 		}
 		if(place instanceof SidePlace3){
 			return new SideActivity3(clientFactory);
@@ -77,13 +76,6 @@ public class PhoneActivityMapper implements ActivityMapper {
 			sa = new StartActivity(clientFactory);
 		}
 		return sa;
-	}
-	
-	public Activity getSideActivity2(){
-		if(sa2 == null){
-			sa2 = new SideActivity2(clientFactory);
-		}
-		return sa2;
 	}
 
 }

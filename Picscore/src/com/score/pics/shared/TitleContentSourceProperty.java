@@ -2,20 +2,20 @@ package com.score.pics.shared;
 
 import java.io.Serializable;
 
-public class TitleContentEntry implements Serializable {
+public class TitleContentSourceProperty implements Serializable {
 	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 147474933947475L;
 	
 	
 	private String title;
 	private String content;
 	private String quelle;
-	
+	private String new_title;
 
-	public TitleContentEntry() {}
+	public TitleContentSourceProperty() {}
 
 	public String getTitle() {
 		return title;
@@ -40,5 +40,14 @@ public class TitleContentEntry implements Serializable {
 	public void setQuelle(String quelle) {
 		this.quelle = quelle;
 	}
+
+	public String getNew_title() {
+		return new_title;
+	}
+
+	public void setNew_title(String new_title) {
+		this.new_title = new_title;
+	}
+	
 	
 }

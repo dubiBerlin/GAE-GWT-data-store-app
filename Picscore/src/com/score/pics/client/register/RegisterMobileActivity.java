@@ -15,7 +15,7 @@ import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
 import com.score.pics.client.ClientFactory;
 import com.score.pics.client.GAEDatastoreService;
 import com.score.pics.client.GAEDatastoreServiceAsync;
-import com.score.pics.shared.AppResources;
+import com.score.pics.shared.StringResources;
 import com.score.pics.shared.Helper;
 import com.score.pics.shared.User;
 
@@ -45,7 +45,7 @@ public class RegisterMobileActivity extends MGWTAbstractActivity {
 				String lastname = view.getLastname();
 				String username = view.getUsername();
 				String email = view.getEmail();
-				String password = Helper.encryptPasswort(view.getPassword(), AppResources.getGwtDesKey());
+				String password = Helper.encryptPasswort(view.getPassword(), StringResources.getGwtDesKey());
 				
 				
 				user.setFirstname(firstname);

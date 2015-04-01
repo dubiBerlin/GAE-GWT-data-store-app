@@ -1,16 +1,18 @@
 package com.score.pics.client.side5;
 
 import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.web.bindery.event.shared.EventBus;
 import com.score.pics.client.ClientFactory;
 import com.score.pics.client.DetailActivity;
-import com.score.pics.shared.AppResources;
+import com.score.pics.shared.StringResources;
 
 public class SideActivity5 extends DetailActivity {
 
 	private SideView5 view;
 	private final ClientFactory clientFactory;
+	private String token;
 	
 	public SideActivity5(ClientFactory clientFactory) {
 		super(clientFactory, clientFactory.getSide5ViewImpl() );
@@ -25,9 +27,17 @@ public class SideActivity5 extends DetailActivity {
 		
 		
 		SidePlace5 place = (SidePlace5)clientFactory.getPlaceController().getWhere();
+
+		token = place.getToken();
+		
+		clientFactory.pushHistoryTracker(token);
 		
 		
-		getStartList(place.getToken(), AppResources.side3Identifier());
+		getStartList(place.getToken(), StringResources.side3Identifier());
+		
+		
+
+		clientFactory.setIDOFPreviousSide(place.getToken());
 		
 		String sessionID = Cookies.getCookie("sid");
 		
@@ -38,5 +48,11 @@ public class SideActivity5 extends DetailActivity {
 		view.setHeaderTitle(place.getToken());
 		
 		panel.setWidget(view);
+	}
+	
+	
+	@Override
+	public void printValue() {
+		Window.alert("Side5: "+token);
 	}
 }

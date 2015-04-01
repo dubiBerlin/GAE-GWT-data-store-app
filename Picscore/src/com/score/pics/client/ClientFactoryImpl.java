@@ -1,5 +1,8 @@
 package com.score.pics.client;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import com.google.gwt.place.shared.PlaceController;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.SimpleEventBus;
@@ -29,8 +32,12 @@ public class ClientFactoryImpl implements ClientFactory {
 	private SideView3 sv3;
 	private SideView4 sv4;
 	private SideView5 sv5;
+//	private AddTopicView atv;
 	private String username;
 	private String actualSide;
+	private String idOFPreviousSide; // its the id of the previousside
+	private LinkedList<String> ancestorPath;
+	
 	
 	public ClientFactoryImpl() {
 		eventBus = new SimpleEventBus();
@@ -132,6 +139,51 @@ public class ClientFactoryImpl implements ClientFactory {
 	}
 
 
+	@Override
+	public void setIDOFPreviousSide(String text) {
+		idOFPreviousSide = text;
+	}
+
+
+	@Override
+	public String getIDOFPreviousSide() {
+		return idOFPreviousSide;
+		
+	}
+
+	/*
+	 * AncestorPath-Content
+	 * */
+
+	@Override
+	public void pushHistoryTracker(String key) {
+		if(ancestorPath==null){
+			ancestorPath = new LinkedList<String>();
+		}
+		ancestorPath.add(key);
+//		printAncestorPAth();
+	}
 	
+	@Override
+	public List<String> getAncestorPath() {
+		if(ancestorPath==null){
+			ancestorPath = new LinkedList<String>();
+		}
+		return ancestorPath;
+	}
+
+	@Override
+	public void deleteLastTokenAncestorPath() {
+		System.out.println("deleteLastTokenAncestorPath()");
+		ancestorPath.removeLast();
+		//printAncestorPAth();
+	}
+	
+	private void printAncestorPAth(){
+		for(int i = 0; i < ancestorPath.size(); i++){
+			System.out.print(ancestorPath.get(i)+" ; ");
+		}
+		System.out.println("");
+	}
 	
 }

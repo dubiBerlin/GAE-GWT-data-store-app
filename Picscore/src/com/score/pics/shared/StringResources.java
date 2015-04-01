@@ -1,6 +1,6 @@
 package com.score.pics.shared;
 
-public class AppResources {
+public class StringResources {
 
 	
 	private final static byte[] GWT_DES_KEY = new byte[] { -110, 121, -65, 22, -60, 61, -22, 
@@ -35,6 +35,19 @@ public class AppResources {
 		return "seite5";
 	}
 	
-
-
+	/* String Resources for the SettingsWidgetPresenter */
+	public String settingsDelete(){
+		return "delete";
+	}
+	
+	public String settingsEdit(){
+		return "edit";
+	}
+	
+	public String settingsShare(){
+		return "share";
+	}
+	
+	
+	
 }

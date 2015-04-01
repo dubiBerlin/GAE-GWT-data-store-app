@@ -2,14 +2,16 @@ package com.score.pics.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.shared.GWT;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.place.shared.PlaceHistoryHandler;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.googlecode.mgwt.mvp.client.AnimatingActivityManager;
 import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.MGWTSettings;
 import com.googlecode.mgwt.ui.client.widget.animation.AnimationWidget;
-import com.googlecode.mgwt.mvp.client.AnimatingActivityManager;
 import com.score.pics.client.login.LoginPlace;
-import com.score.pics.client.register.RegisterPlace;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -27,7 +29,7 @@ public class Picscore implements EntryPoint {
 		historyHandler.handleCurrentHistory();		
 	}
 	
-	private void createPhoneDisplay(ClientFactory clientFactory ){
+	private void createPhoneDisplay(final ClientFactory clientFactory ){
 		AnimationWidget display = new AnimationWidget();
 		
 		PhoneActivityMapper appActivityMapper = new PhoneActivityMapper(clientFactory);
@@ -36,6 +38,15 @@ public class Picscore implements EntryPoint {
 		AnimatingActivityManager activityManager = new AnimatingActivityManager(appActivityMapper, appAnimationMapper, clientFactory.getEventBus());
 		
 		activityManager.setDisplay(display);
+		
+		History.addValueChangeHandler(new ValueChangeHandler<String>() {
+			
+			@Override
+			public void onValueChange(ValueChangeEvent<String> event) {
+				clientFactory.deleteLastTokenAncestorPath();
+				clientFactory.deleteLastTokenAncestorPath();
+			}
+		});
 		
 		RootPanel.get().add(display);
 		

@@ -14,14 +14,20 @@ public class RestCell implements Cell<CellContent>{
 	public interface Template extends SafeHtmlTemplates{
 		@SafeHtmlTemplates.Template("<table width='100%'>" +
 										"<tr>" +
-											"<th align='left' style='bord'><h4>{0}</h4></th>" +
+											"<td align='left' style='font-size:1.1em;'>{0}</td>" +
+											//"<th align='left' style='bord'><h4>{0}</h4></th>" +
 										"<tr>" +
-										
+//										"<tr>" +
+//											"<td style='height:5px'></td>" +
+//										"<tr>" +
 										"<tr>" +
-											"<td align='left'><h4>{1}</h4></td>" +
+											"<td align='left'>{1}</td>" +
 										"<tr>" +
+//										"<tr>" +
+//											"<td style='height:5px'></td>" +
+//										"<tr>" +
 										"<tr>" +
-											"<td align='left'><h4>{2}</h4></td>" +
+											"<td align='left'>{2}</td>" +
 										"<tr>" +
 									"</table>")
 		SafeHtml content(String title, String content, String source);

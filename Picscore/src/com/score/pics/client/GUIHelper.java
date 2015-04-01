@@ -124,7 +124,7 @@ public class GUIHelper {
 	public static void setBackGroundColorInCellList(CellList cellList, List list){
 		for(int i = 0; i < list.size(); i++){
 		   cellList.getElement().getElementsByTagName("li").getItem(i).getStyle().setBackgroundColor("white");
-	       cellList.getElement().getElementsByTagName("li").getItem(i).getStyle().setColor("#3498DB");
+	       cellList.getElement().getElementsByTagName("li").getItem(i).getStyle().setColor("#1F3A93");//3498DB
 	   }
 	}
 	

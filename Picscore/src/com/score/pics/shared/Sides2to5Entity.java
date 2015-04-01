@@ -1,6 +1,7 @@
 package com.score.pics.shared;
 
 import java.io.Serializable;
+import java.util.List;
 
 	/*
 	 * Seite2 - Seite5
@@ -23,21 +24,33 @@ public class Sides2to5Entity implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private String eintrag;
+	private String title;
+	// for the Entity ancestor path. this is the key of the previous side
+	//private String key_of_previous_side; 
 	private String side;
 	private String username;
-	
+	private List<String>ancestorPath;
 	
 	public Sides2to5Entity() {}
 
 
-	public String getEintrag() {
-		return eintrag;
+	public List<String> getAncestorPath() {
+		return ancestorPath;
 	}
 
 
-	public void setEintrag(String eintrag) {
-		this.eintrag = eintrag;
+	public void setAncestorPath(List<String> ancestorPath) {
+		this.ancestorPath = ancestorPath;
+	}
+
+
+	public String getTitle() {
+		return title;
+	}
+
+
+	public void setTitle(String eintrag) {
+		this.title = eintrag;
 	}
 
 
@@ -60,7 +73,6 @@ public class Sides2to5Entity implements Serializable{
 		this.username = username;
 	}
 
-	
 	
 	
 }
