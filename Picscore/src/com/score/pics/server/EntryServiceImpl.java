@@ -3,14 +3,18 @@ package com.score.pics.server;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.appengine.api.datastore.Query.FilterPredicate;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.Filter;
+import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Text;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.score.pics.client.EntryService;
@@ -90,31 +94,6 @@ public class EntryServiceImpl extends RemoteServiceServlet implements
 		return false;
 	}
 
-//	/*
-//	 * @param Key key:
-//	 * 
-//	 * 
-//	 * */
-//	private boolean entryExists(String username, String eintrag, String property, String side) {
-//		
-//		Key key = KeyFactory.createKey("user", username);	
-//		Query query = new Query(side).setAncestor(key);
-//		
-//		List<Entity> results = datastore.prepare(query)
-//				.asList(FetchOptions.Builder.withDefaults());
-//		
-//		
-//		for(int i = 0; i < results.size(); i++){
-//			String e = (String) results.get(i).getProperty(property);
-//			
-//			if(e.equals(eintrag)){
-//				return true;
-//			}
-//		}
-//		
-//		return false;
-//		
-//	}
 	
 	/*
 	 * @param Key key:
@@ -213,82 +192,6 @@ public class EntryServiceImpl extends RemoteServiceServlet implements
 		return list;
 	}
 	
-//	/*
-//	 * Die Einträge von Seite2,3,4,5
-//	 * 
-//	 * */
-//	@Override
-//	public List<TitleContentSourceProperty> getTopicsFromSide2To5(Sides2to5Entity s25e) {
-//		
-//		String username = s25e.getUsername();
-//		String entryBezeichner = s25e.getTitle()+"/"+s25e.getSide();
-//		
-//		
-//		Key key = KeyFactory.createKey("user", username);
-//		
-//		Query users = new Query(entryBezeichner, key);
-//		
-//		List<Entity> results = datastore.prepare(users)
-//				.asList(FetchOptions.Builder.withDefaults());
-//		
-//		List<TitleContentSourceProperty> list = new ArrayList<TitleContentSourceProperty>();
-//		
-//		for(int i = 0; i < results.size(); i++){
-//			TitleContentSourceProperty tce = new TitleContentSourceProperty();
-//			tce.setTitle(results.get(i).getProperty("title").toString());
-//
-//			if(results.get(i).getProperty("content") instanceof Text){
-//				tce.setContent(((Text)results.get(i).getProperty("content")).getValue());
-//			}else {
-//				tce.setContent(results.get(i).getProperty("content").toString());
-//			}
-//			tce.setQuelle(results.get(i).getProperty("source").toString());
-//			System.out.println("title: "+tce.getTitle());
-//			list.add(tce);
-//		}
-//		
-//		
-//		return list;
-//	}
-//	
-//	/*
-//	 * Die Einträge von Seite2,3,4,5
-//	 * 
-//	 * */
-//	@Override
-//	public List<TitleContentSourceProperty> getTopicsFromSide2To5(Sides2to5Entity s25e) {
-//		
-//		String username = s25e.getUsername();
-//		String entryBezeichner = s25e.getTitle()+"/"+s25e.getSide();
-//		
-//		
-//		Key key = KeyFactory.createKey("user", username);
-//		
-//		Query users = new Query(entryBezeichner, key);
-//		
-//		List<Entity> results = datastore.prepare(users)
-//				.asList(FetchOptions.Builder.withDefaults());
-//		
-//		List<TitleContentSourceProperty> list = new ArrayList<TitleContentSourceProperty>();
-//		
-//		for(int i = 0; i < results.size(); i++){
-//			TitleContentSourceProperty tce = new TitleContentSourceProperty();
-//			tce.setTitle(results.get(i).getProperty("title").toString());
-//			
-//			if(results.get(i).getProperty("content") instanceof Text){
-//				tce.setContent(((Text)results.get(i).getProperty("content")).getValue());
-//			}else {
-//				tce.setContent(results.get(i).getProperty("content").toString());
-//			}
-//			tce.setQuelle(results.get(i).getProperty("source").toString());
-//			System.out.println("title: "+tce.getTitle());
-//			list.add(tce);
-//		}
-//		
-//		
-//		return list;
-//	}
-	
 	/*
 	 * @param TitleContentEntry:    Titel ist die ID eines jeden Eintrags und darf pro Seite 
 	 * 							    nur einmnal vorkommen. Muss daher überprüft werden ob schon enthalten.
@@ -314,7 +217,7 @@ public class EntryServiceImpl extends RemoteServiceServlet implements
 		
 		
 		if( !entryExistsPart2(key, title, "title", side) ){
-			
+			System.out.println("Title nicht vorhanden");
 			Entity e = new Entity(side,key);
 			e.setProperty("title", title);
 			
@@ -336,11 +239,19 @@ public class EntryServiceImpl extends RemoteServiceServlet implements
 			return object;
 			
 		}else{
+			System.out.println("Title schon vorhanden");
 			return null;
 		}
 	}
 	
 	private Key getKey(String side, String username, List<String> ancestorPath){
+		
+//		System.out.println("getKey() side:"+side+" username:"+username);
+//		System.out.print("ancestorPath: ");
+//		for(int i = 0; i < ancestorPath.size(); i++){
+//			System.out.print(ancestorPath.get(i)+" ");
+//		}
+		
 		Key key = null;
 		/* Build the Key*/
 		if(side.equals(StringResources.side2Identifier())){
@@ -367,62 +278,11 @@ public class EntryServiceImpl extends RemoteServiceServlet implements
 				}
 			}
 		}
+		System.out.println("\nreturned key: "+key);
 		return key;
 	}
 
 	
-//	/*
-//	 * @param TitleContentEntry:    Titel ist die ID eines jeden Eintrags und darf pro Seite 
-//	 * 							    nur einmnal vorkommen. Muss daher überprüft werden ob schon enthalten.
-//	 * @param Sides2to5Entity s25e: Enthält alle Inhalte um die Entity zu erzeugen. Die Entity Bezeichnung 
-//	 * 								und den Key.
-//	 * 
-//	 * */
-//	public TitleContentSourceProperty saveTitleContentObject(Sides2to5Entity s25e,TitleContentSourceProperty object) {
-//		
-//		//1. Überprüfen ob der neue Eintrag schon vorhanden ist
-//		//   Der neue Eintrag wird über den Title definiert. Der Title ist die ID des
-//		//   neuen Eintrags
-//		
-//		String title = object.getTitle();
-//		
-//		String vorherigerEintrag = s25e.getTitle();
-//		String side  = s25e.getSide();
-//		String username = s25e.getUsername();
-//		
-//		String entityBezeichner = vorherigerEintrag+"/"+side;
-//		
-//		
-//		datastore = DatastoreServiceFactory.getDatastoreService();
-//		
-//		Key key = KeyFactory.createKey("user", username);		
-//		
-//		if( !entryExists(username, title, "title", entityBezeichner) ){
-//			
-//			Entity e = new Entity(entityBezeichner, key);
-//			e.setProperty("title", title);
-//			
-//			if(object.getContent().length()>500){
-//				Text textContent = new Text(object.getContent());
-//				e.setProperty("content", textContent);
-//				
-//			}else{
-//				String content = object.getContent();
-//				e.setProperty("content", content);
-//			}
-//			
-//			
-//			String source = object.getQuelle();
-//			e.setProperty("source", source);
-//			
-//			datastore.put(e);
-//			
-//			return object;
-//			
-//		}else{
-//			return null;
-//		}
-//	}
 
 	/* Code for UPDATING the GAE Datastore
 	 * These methodes are being used to update the existing Entities and the appropriate properties.
@@ -439,63 +299,159 @@ public class EntryServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public TitleContentSourceProperty edit(Sides2to5Entity s25e, TitleContentSourceProperty object) {
 		
+//		System.out.println("EntryServiceImpl edit() method!");
+		System.out.println("new title: "+object.getNew_title());
 		datastore = DatastoreServiceFactory.getDatastoreService();
 		
-		// 1. Überprüfen ob der neue Eintrag schon vorhanden ist
-		//    Der neue Eintrag wird über den Title definiert. Der Title ist die ID des
-		//    neuen Eintrags
+		
 		String title = object.getTitle();
-		
-		String vorherigerEintrag = s25e.getTitle();
 		String side  = s25e.getSide();
-		String entityBezeichner = vorherigerEintrag+"/"+side;	
-		
 		String username = s25e.getUsername();
+		List<String>ancestorPath = s25e.getAncestorPath();	
 		
-		Key key = KeyFactory.createKey("user", username);		
+		Key key = getKey( side,  username, ancestorPath);
 		
+		// 1. Überprüfen ob der neue Eintrag schon vorhanden ist
+		//    Der neue Eintrag wird über den Title definiert. Der Title ist die ID der children
+		//    Einträge
+		if(object.getNew_title()==null){
 			
-		Entity e = new Entity(entityBezeichner, key);
+			Filter titleFilter =  new FilterPredicate("title",
+					                      FilterOperator.EQUAL,
+					                      object.getTitle());
 			
-		/* If the title was changed  */
-		if(object.getNew_title()!=null || !object.getNew_title().equals("")){
-				
-			// 1. set the new title
-			e.setProperty("title", object.getNew_title());
-				
-			// 2. check if there are any Entities(of next sides of course) which identifiers contains 
-			//    the old title because they have to be changed too.
-			String nextSide = getNextSide(side);
+			Query q = new Query(side).setAncestor(key).setFilter(titleFilter);
+	
+			PreparedQuery pq = datastore.prepare(q);
 			
-			// create the key
-			Key key2 = KeyFactory.createKey("user", username);
-			// create descrption
-			String entityDescription = title+"/"+nextSide;
+			Entity e = pq.asSingleEntity();
 			
-			Query users = new Query(entityDescription, key);
-			
-			List<Entity> results = datastore.prepare(users)
-					.asList(FetchOptions.Builder.withDefaults());
-		}			
-			
-		/* If String has more than 500 characters it has to be saved as a Text-object into GAE Datastore  */
-		if(object.getContent().length()>500){
-			Text textContent = new Text(object.getContent());
-			e.setProperty("content", textContent);
+			if(e==null){
+				System.out.println("No entity found");
+				return null;
+			}else{
+
+				storeTitleContentsourceEntity(e, null, object.getContent(), object.getQuelle());
+			}
 			
 		}else{
-			String content = object.getContent();
-			e.setProperty("content", content);
-		}
-		
-		
-		String source = object.getQuelle();
-		e.setProperty("source", source);
-		
-		datastore.put(e);
-		
+			/* 1. check if the new title already exists
+			 * 2. The title of this entry was changed. The title is the id of the child entries
+			 *    so all child entries have to be deleted and new child entries have to be created
+			 *    with the new id=title and the contents.
+			 *    
+			 * */
+			if(!title.equals(object.getNew_title())&& (object.getNew_title()!=null || !object.getNew_title().equals(""))){
+				
+				System.out.println(title+" equals not "+object.getNew_title());
+				
+				/*
+				 * 1. does child Entries exist? If yes, all the child entries have to be changed */ 
+				if(!side.equals(StringResources.side5Identifier())){
+					
+					// 1. Auf alle child Entries zugreifen
+					String next_side = getNextSide(side);
+					
+					List<String>erweiternAncestorPath = ancestorPath;
+					erweiternAncestorPath.add(title);
+					
+					Key childKey = getKey(next_side, username, erweiternAncestorPath);
+					
+					Query users = new Query(next_side, childKey);
+					
+					List<Entity> results = datastore.prepare(users).asList(FetchOptions.Builder.withDefaults());
+					
+					/*
+					 *  Der neue Key für die Child-Entities
+					 */
+					// 1. Für doe child-Entries einen neuen AncestorPath erstellen mit dem neuen Titel als ID
+//					System.out.println("Der neue ancestor path:");
+					List<String> newAncestorPath = ancestorPath;
+					newAncestorPath.remove(newAncestorPath.size()-1);
+					newAncestorPath.add(object.getNew_title());
+					
+					
+					Key new_key = getKey(next_side, username, newAncestorPath);
+					
+					if(results.size()>0){
+						for(int i = 0; i < results.size(); i++){
+							System.out.println(results.get(i).getProperty("title"));
+							
+							
+							String copyTitle = results.get(i).getProperty("title").toString();
+							String copyContent = results.get(i).getProperty("content").toString();
+							String copySource = results.get(i).getProperty("source").toString();
+
+							Entity e = new Entity(next_side, new_key);
+							storeTitleContentsourceEntity(e, copyTitle, copyContent, copySource);
+							
+							datastore.delete(results.get(i).getKey());
+						}
+						
+						/* Jetzt die alten Child-entities löschen die ja die den alten, veränderten, nicht mehr vorhandenen
+						 * title als ID haben. 
+						 * Alle Entities mit dem Key werden nun gelöscht.*/
+						
+						/*
+						 * Zuletzt den aktuellen veränderten Eintrag (title,content, source)  ändern und speichern
+						 * */
+						Filter titleFilter =  new FilterPredicate("title",
+			                      FilterOperator.EQUAL,
+			                      object.getTitle());
+	
+						Query q = new Query(side).setAncestor(key).setFilter(titleFilter);
+					
+						PreparedQuery pq = datastore.prepare(q);
+						
+						Entity e = pq.asSingleEntity();
+						
+						if(e==null){
+							System.out.println("No entity found");
+							return null;
+						}else{
+							System.out.println("Entsprechende entity gefunden");
+							storeTitleContentsourceEntity(e, object.getNew_title(), object.getContent(), object.getQuelle());
+						}
+						TitleContentSourceProperty return_object = new TitleContentSourceProperty();
+						return_object.setTitle(object.getNew_title());
+						return_object.setContent(object.getContent());
+						return_object.setQuelle(object.getQuelle());
+						System.out.println("return Object ");
+						return return_object;
+					}
+					
+					/* Wenn der veränderte keine Child Einträge besitzt dann einfach die Entitiy neu speichern */
+					else{
+						
+						
+					}
+						
+				}
+				return object;
+			}
+		}		
 		return object;
 		
+	}
+
+	private void storeTitleContentsourceEntity(Entity e, String title, String content, String source){
+		
+		if(title!=null){
+			e.setProperty("title", title);
+		}
+		if(content!=null){
+			if(content.length() > 500){
+				Text textContent = new Text(content);
+				e.setProperty("content", textContent);
+				
+			}else{
+				e.setProperty("content", content);
+			}
+		}
+		if(source!=null){
+			e.setProperty("source", source);
+		}
+		datastore.put(e);
 	}
 
 	/*
@@ -540,4 +496,5 @@ public class EntryServiceImpl extends RemoteServiceServlet implements
 		
 	}
 
+	
 }

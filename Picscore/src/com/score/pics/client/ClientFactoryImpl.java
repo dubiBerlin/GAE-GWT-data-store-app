@@ -161,7 +161,7 @@ public class ClientFactoryImpl implements ClientFactory {
 			ancestorPath = new LinkedList<String>();
 		}
 		ancestorPath.add(key);
-//		printAncestorPAth();
+		printAncestorPAth();
 	}
 	
 	@Override
@@ -176,7 +176,7 @@ public class ClientFactoryImpl implements ClientFactory {
 	public void deleteLastTokenAncestorPath() {
 		System.out.println("deleteLastTokenAncestorPath()");
 		ancestorPath.removeLast();
-		//printAncestorPAth();
+		printAncestorPAth();
 	}
 	
 	private void printAncestorPAth(){

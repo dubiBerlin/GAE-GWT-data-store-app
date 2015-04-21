@@ -1,8 +1,7 @@
 package com.score.pics.client.widgets;
 
-import com.google.gwt.core.shared.GWT;
-import com.google.gwt.user.client.Cookies;
 import com.google.web.bindery.event.shared.EventBus;
+import com.google.gwt.user.client.Cookies;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
 import com.googlecode.mgwt.ui.client.widget.animation.Animation;
@@ -12,9 +11,10 @@ import com.score.pics.client.ClientFactory;
 import com.score.pics.client.EntryService;
 import com.score.pics.client.EntryServiceAsync;
 import com.score.pics.client.events.DeleteEditShareEvent;
+import com.google.gwt.core.shared.GWT;
 
-public class SettingsWidgetPresenter  extends DialogOverlay {
 
+public class SettingsWidgetPresenter extends DialogOverlay {
 
 	private EventBus eventBus;
 	private ClientFactory clientFactory;
@@ -112,4 +112,5 @@ public class SettingsWidgetPresenter  extends DialogOverlay {
 		view.setEditValue(edit_it);
 		view.setShareValue(share_it);
 	}
+
 }

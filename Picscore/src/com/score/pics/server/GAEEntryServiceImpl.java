@@ -10,8 +10,8 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.score.pics.client.GAEEntryService;
-import com.score.pics.shared.AppResources;
-import com.score.pics.shared.TitleContentEntry;
+import com.score.pics.shared.StringResources;
+import com.score.pics.shared.TitleContentSourceProperty;
 //import javax.servlet.http.Cookie; 
 import com.score.pics.shared.Helper;
 
@@ -28,7 +28,7 @@ public class GAEEntryServiceImpl extends RemoteServiceServlet implements
 		
 		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
 		
-		String username_encoded = Helper.encryptPasswort(username, AppResources.getGwtDesKey());
+		String username_encoded = Helper.encryptPasswort(username, StringResources.getGwtDesKey());
 		
 		String key = username_encoded+"/"+start_topic;
 		
@@ -83,14 +83,14 @@ public class GAEEntryServiceImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public List<TitleContentEntry> getTitleContentEntries(
-			TitleContentEntry object) {
+	public List<TitleContentSourceProperty> getTitleContentEntries(
+			TitleContentSourceProperty object) {
 		
 		return null;
 	}
 
 	@Override
-	public TitleContentEntry saveTitleContentObjectInDS(String entity, TitleContentEntry object) {
+	public TitleContentSourceProperty saveTitleContentObjectInDS(String entity, TitleContentSourceProperty object) {
 		
 		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
 		

@@ -74,6 +74,7 @@ public class DetailActivity extends MGWTAbstractActivity {
 						CellContent cc = list.get(index);
 						EditWidgetPresenter ewp = new EditWidgetPresenter(eventBus, clientFactory);
 						ewp.setCellContent(cc);
+						ewp.setSe(se);
 						ewp.show();
 						
 					}else{
@@ -110,18 +111,22 @@ public class DetailActivity extends MGWTAbstractActivity {
 		
 		eventBus.addHandler(AddTopicSide2to5Event.TYPE, new AddTopicSide2to5EventHandler() {
 			public void speichern(AddTopicSide2to5Event event) {
-				
-				String title = event.getTce().getTitle();
-				String content = event.getTce().getContent();
-				String source= event.getTce().getQuelle();
-				
-				CellContent cc = new CellContent(title, content, source);
-				
-				list.add(cc);
-				
-				view.render(list);
-				view.refresh();
-				GUIHelper.setBackGroundColorInCellList(view.getCellListWidget(), list);
+				if(event.getTce()!=null){
+					String title = event.getTce().getTitle();
+					String content = event.getTce().getContent();
+					String source= event.getTce().getQuelle();
+					
+					CellContent cc = new CellContent(title, content, source);
+					
+					list.add(cc);
+					
+					view.render(list);
+					view.refresh();
+					GUIHelper.setBackGroundColorInCellList(view.getCellListWidget(), list);
+					
+				}else{
+					Window.alert("Eintrag ist schon vorhanden");
+				}
 				
 			}
 		});
