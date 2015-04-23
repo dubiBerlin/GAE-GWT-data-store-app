@@ -66,8 +66,20 @@
 	
 8. Die beiden Widgets AddTopic und AddTopicWithTitle
    nach dem MVP-Muster auseinander nehmen.
+   
+9. SettingsWidget implementieren: edit, delete, share   
 
-9. dependency injections implementieren
+	EditWidgetPresenter fertig
+	EntryService für das Editieren fertig stellen 
+	
+	9.1. Dem TitleContentSourceProperty Objekt neuen Parameter hinzugefügt -> String new_title
+	9.2. Neues Objekt
+
+
+10. falls der Titel schon vorhanden ist, dann soll die Überprüfung clientseitig erfolgen
+    und nicht mehr serverseitig.
+
+
 
 
 Problem:
@@ -91,3 +103,20 @@ Problem:
 				String einfach einfügen
 				
 				
+
+				
+LETZEN AUFGABEN:
+
+- StartSeite soll auch CellContent bestehen so dass die StartSeite nicht extra-Zeugs benötigt
+
+- Eine Activity erstellen die von DetailActivity erbt und von der alle Sides Activities erben
+  damit DetailActivity abhängiger wird und freier von Logik.
+
+
+- Sonderzeichen eingeben verboten im Login und bei der Registrierung
+
+- Fehlermessages nach 3 Sekunden wieder entfernen
+
+- Usernamen nicht mit equal sondern mit equalsIgnoreCase testen
+
+- nach dem Edit, die alte Liste löschen bei der SideView, weil die alten Einträge noch da stehen nach dem Edit.
