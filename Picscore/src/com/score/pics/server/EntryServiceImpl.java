@@ -423,6 +423,23 @@ public class EntryServiceImpl extends RemoteServiceServlet implements
 					/* Wenn der veränderte keine Child Einträge besitzt dann einfach die Entitiy neu speichern */
 					else{
 						
+						Filter titleFilter =  new FilterPredicate("title",
+			                      FilterOperator.EQUAL,
+			                      object.getTitle());
+	
+						Query q = new Query(side).setAncestor(key).setFilter(titleFilter);
+					
+						PreparedQuery pq = datastore.prepare(q);
+						
+						Entity e = pq.asSingleEntity();
+						
+						if(e==null){
+							System.out.println("No entity found");
+							return null;
+						}else{
+							System.out.println("Entsprechende entity gefunden");
+							storeTitleContentsourceEntity(e, object.getNew_title(), object.getContent(), object.getQuelle());
+						}
 						
 					}
 						
