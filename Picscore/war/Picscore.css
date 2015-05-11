@@ -7,3 +7,15 @@
 	border-bottom-style: solid;
 	border-bottom-color: #3498DB;
 }
+
+.error_message{
+	color: #ED0E0E;
+	font: 4em;
+	font-size: large;
+}
+
+.success_message{
+	color: blue;
+	font: 4em;
+	font-size: large;
+}

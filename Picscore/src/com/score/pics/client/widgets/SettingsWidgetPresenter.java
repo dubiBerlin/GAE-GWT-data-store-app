@@ -1,24 +1,22 @@
 package com.score.pics.client.widgets;
 
-import com.google.web.bindery.event.shared.EventBus;
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.web.bindery.event.shared.EventBus;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
 import com.googlecode.mgwt.ui.client.widget.animation.Animation;
 import com.googlecode.mgwt.ui.client.widget.animation.Animations;
-import com.googlecode.mgwt.ui.client.widget.dialog.Dialogs;
 import com.googlecode.mgwt.ui.client.widget.dialog.ConfirmDialog.ConfirmCallback;
+import com.googlecode.mgwt.ui.client.widget.dialog.Dialogs;
 import com.googlecode.mgwt.ui.client.widget.dialog.overlay.DialogOverlay;
 import com.score.pics.client.ClientFactory;
-import com.score.pics.client.EntryService;
-import com.score.pics.client.EntryServiceAsync;
 import com.score.pics.client.GAEDatastoreService;
 import com.score.pics.client.GAEDatastoreServiceAsync;
 import com.score.pics.client.events.DeleteEditShareEvent;
 import com.score.pics.client.login.LoginPlace;
-import com.google.gwt.core.shared.GWT;
 
 
 public class SettingsWidgetPresenter extends DialogOverlay {

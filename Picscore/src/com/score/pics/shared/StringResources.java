@@ -49,5 +49,18 @@ public class StringResources {
 	}
 	
 	
+	// MELDUNGEN, FEHLER UND SUCCESS
+	
+	/*
+	 * The css for the class=error_message is located in war/picscore.css
+	 * */
+	public static String getErrorMessage(String errorMessage, String id){
+		return "<div id='"+id+"' >"+errorMessage+"</div>";
+	}//class='error_message'
+	
+	// Success-Meldung
+	public static String getSuccesMessage(String successMessage, String id){
+		return "<div id='"+id+"' >"+successMessage+"</div>";
+	}//class='success_message'
 	
 }

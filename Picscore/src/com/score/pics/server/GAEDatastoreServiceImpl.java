@@ -32,31 +32,29 @@ public class GAEDatastoreServiceImpl extends RemoteServiceServlet
 	}
 
 	@Override
-	public String registerUser(User user) {
+	public boolean registerUser(User user) {
 		
 		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
 		
 		Key key = KeyFactory.createKey("User", user.getUsername());
 		
-		String result = "";
+		boolean result = false;
 		
 		try{
 			Entity e5 = ds.get(key);
 			
-			result = "Username ist schon vorhanden";
+			result = false;
 			
 			
 		}catch(EntityNotFoundException ex){
 			Entity eUser = new Entity("User", user.getUsername());
-			eUser.setProperty("Firstname", user.getFirstname());
-			eUser.setProperty("Lastname", user.getLastname());
 			eUser.setProperty("Username", user.getUsername());
 			eUser.setProperty("Email", user.getEmail());
 			eUser.setProperty("Password", user.getPassword());
 			
 			ds.put(eUser);
 			
-			result = "Erfolgreich registriert";
+			result = true;
 		}
 		return result;
 	}

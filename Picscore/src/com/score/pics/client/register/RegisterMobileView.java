@@ -7,11 +7,9 @@ public interface RegisterMobileView extends IsWidget {
 
 	public HasTapHandlers getButton();
 	public void setMessage(String text);
-	
-	public String getFirstname();
-	public String getLastname();
 	public String getUsername();
 	public String getEmail();
 	public String getPassword();
+	public String getPasswordRepeat();
 	
 }

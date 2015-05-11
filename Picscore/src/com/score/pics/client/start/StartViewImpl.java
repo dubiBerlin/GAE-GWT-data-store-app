@@ -12,6 +12,7 @@ import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.HasCellSelectedHandler;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexPanel;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
+import com.score.pics.client.helper.GUIHelper;
 
 public class StartViewImpl implements StartView {
 	
@@ -36,7 +37,7 @@ public class StartViewImpl implements StartView {
 		
 		headerLabel = new Label();
 		
-		HeaderPanel headerpanel = com.score.pics.client.GUIHelper.getHeaderPanel(headerLabel, imageBttn, settingsBttn);
+		HeaderPanel headerpanel = GUIHelper.getHeaderPanel(headerLabel, imageBttn, settingsBttn);
 		
 		
 		scrllPnl = new ScrollPanel();

@@ -10,7 +10,7 @@ public interface GAEDatastoreService extends RemoteService{
 
 	public String extecuteServlet(String text);
 	
-	public String registerUser(User user);
+	public boolean registerUser(User user);
 
 	public LoginUser login(LoginUser login);
 	

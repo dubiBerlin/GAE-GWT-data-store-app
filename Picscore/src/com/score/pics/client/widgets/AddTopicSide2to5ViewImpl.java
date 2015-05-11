@@ -12,7 +12,7 @@ import com.googlecode.mgwt.ui.client.widget.input.MTextArea;
 import com.googlecode.mgwt.ui.client.widget.input.MTextBox;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexPanel;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexPropertyHelper.Alignment;
-import com.score.pics.client.GUIHelper;
+import com.score.pics.client.helper.GUIHelper;
 import com.score.pics.client.resources.AppBundle;
 
 

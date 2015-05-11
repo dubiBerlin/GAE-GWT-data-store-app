@@ -21,14 +21,15 @@
   <inherits name='com.googlecode.mgwt.MGWT'/>
   <inherits name="com.googlecode.gwt.crypto.Crypto"/> 
   <inherits name="com.google.gwt.inject.Inject"/> 
+  <inherits name='com.google.gwt.query.Query'/>
   <!-- Specify the app entry point class.      
   
   <inherits name="com.google.gwt.inject.Inject"/>
                      -->
   <entry-point class='com.score.pics.client.Picscore'/>
 
-  <collapse-all-properties />
-  <!-- Specify the paths for translatable code                    -->
+  <!--   <collapse-all-properties />
+Specify the paths for translatable code                    -->
   <source path='client'/>
   <source path='shared'/>
 

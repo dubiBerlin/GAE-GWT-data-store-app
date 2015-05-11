@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.user.client.Cookies;
-import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
@@ -19,9 +18,9 @@ import com.score.pics.client.EntryService;
 import com.score.pics.client.EntryServiceAsync;
 import com.score.pics.client.GAEDatastoreService;
 import com.score.pics.client.GAEDatastoreServiceAsync;
-import com.score.pics.client.GUIHelper;
 import com.score.pics.client.events.StartAddTopic;
 import com.score.pics.client.events.StartaddTopicEventHandler;
+import com.score.pics.client.helper.GUIHelper;
 import com.score.pics.client.login.LoginPlace;
 import com.score.pics.client.side2.SidePlace2;
 import com.score.pics.client.widgets.AddTopicWidget;

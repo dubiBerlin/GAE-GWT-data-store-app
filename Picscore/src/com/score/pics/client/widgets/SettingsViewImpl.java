@@ -10,7 +10,7 @@ import com.googlecode.mgwt.ui.client.widget.header.HeaderPanel;
 import com.googlecode.mgwt.ui.client.widget.input.radio.MRadioButton;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexPanel;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexPropertyHelper.Alignment;
-import com.score.pics.client.GUIHelper;
+import com.score.pics.client.helper.GUIHelper;
 import com.score.pics.client.resources.AppBundle;
 
 public class SettingsViewImpl implements SettingsView {

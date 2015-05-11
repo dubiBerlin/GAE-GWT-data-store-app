@@ -7,7 +7,6 @@ import com.google.appengine.api.datastore.Query.FilterPredicate;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
@@ -23,20 +22,6 @@ import com.score.pics.shared.Sides2to5Entity;
 import com.score.pics.shared.TitleContentSourceProperty;
 
 
-/*
- *  
-"kann man das, was dort steht, nicht sehr vielseitig interpretieren?﻿"
-
-es gibt sowas nicht wie "man kann den koran so oder so interpretieren"
-das ist schwachsinn und eine lüge der medien und der moslems um die menschen im westen zu beruhigen und damit sie denken "ok die moslems hier interpretieren den koran friedlich und die isis und andere jihadisten interpretieren den koran gewalttätig"
-
-wie man dann koran zu interpetrieren und zu verstehen hat, dass
- hat mohammad vorgemacht. 
- er hat gezeigt wie man den koran zu interpretieren und zu verstehen hat.
- 
-
-
-*/
 public class EntryServiceImpl extends RemoteServiceServlet implements
 		EntryService {
 
@@ -271,7 +256,7 @@ public class EntryServiceImpl extends RemoteServiceServlet implements
 				}
 			}
 		}
-//		System.out.println("\nreturned key: "+key);
+		System.out.println("\nreturned key: "+key);
 		return key;
 	}
 

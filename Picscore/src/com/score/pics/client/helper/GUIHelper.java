@@ -1,4 +1,4 @@
-package com.score.pics.client;
+package com.score.pics.client.helper;
 
 import java.util.List;
 

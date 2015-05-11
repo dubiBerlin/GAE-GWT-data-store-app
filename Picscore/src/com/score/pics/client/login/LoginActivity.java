@@ -4,7 +4,6 @@ import java.util.Date;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.user.client.Cookies;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.web.bindery.event.shared.EventBus;
@@ -15,10 +14,10 @@ import com.score.pics.client.ClientFactory;
 import com.score.pics.client.GAEDatastoreService;
 import com.score.pics.client.GAEDatastoreServiceAsync;
 import com.score.pics.client.register.RegisterPlace;
-import com.score.pics.shared.StringResources;
+import com.score.pics.client.start.StartPlace;
 import com.score.pics.shared.Helper;
 import com.score.pics.shared.LoginUser;
-import com.score.pics.client.start.StartPlace;
+import com.score.pics.shared.StringResources;
 
 public class LoginActivity extends MGWTAbstractActivity {
 

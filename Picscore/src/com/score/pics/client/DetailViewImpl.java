@@ -12,7 +12,7 @@ import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.HasCellSelectedHandler;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexPanel;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
-import com.score.pics.client.GUIHelper;
+import com.score.pics.client.helper.GUIHelper;
 import com.score.pics.client.models.RestCell;
 import com.score.pics.shared.CellContent;
 
