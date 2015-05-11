@@ -4,6 +4,7 @@ import com.google.gwt.event.logical.shared.HasValueChangeHandlers;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.HasTapHandlers;
+import com.googlecode.mgwt.ui.client.widget.button.Button;
 import com.googlecode.mgwt.ui.client.widget.button.image.CancelImageButton;
 import com.googlecode.mgwt.ui.client.widget.header.HeaderPanel;
 import com.googlecode.mgwt.ui.client.widget.input.radio.MRadioButton;
@@ -17,6 +18,7 @@ public class SettingsViewImpl implements SettingsView {
 	private MRadioButton delete;
 	private MRadioButton edit;
 	private MRadioButton share;
+	private Button loggout;
 	private CancelImageButton close;
 	private FlexPanel mainPnl;
 	private Label distance1;
@@ -71,13 +73,22 @@ public class SettingsViewImpl implements SettingsView {
 		share.getElement().getStyle().setColor("#3498DB");
 		share.setWidth("90%");
 		share.setText("share");
-//		share.setValue(false);
+		
+		Label de3 = GUIHelper.distance10PX();
+		loggout = new Button("Logout");
+		loggout.setRound(true);
+		loggout.setWidth("90%");
+		loggout.getElement().getStyle().setBackgroundColor("#FF1A5B");
+		loggout.getElement().getStyle().setBorderColor("white");
+		loggout.getElement().getStyle().setColor("white");
 		
 		body.add(edit);
 		body.add(de1);
 		body.add(delete);
 		body.add(de2);
 		body.add(share);
+		body.add(de3);
+		body.add(loggout);
 		
 		return body;
 	}
@@ -140,6 +151,11 @@ public class SettingsViewImpl implements SettingsView {
 	@Override
 	public HasValueChangeHandlers<Boolean> getDeleteChangeHandler() {
 		return delete;
+	}
+
+	@Override
+	public HasTapHandlers getLogoutButton() {
+		return loggout;
 	}
 
 }

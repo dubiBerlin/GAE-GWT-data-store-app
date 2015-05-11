@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.core.shared.GWT;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
@@ -19,10 +20,13 @@ import com.score.pics.client.events.AddTopicSide2to5Event;
 import com.score.pics.client.events.AddTopicSide2to5EventHandler;
 import com.score.pics.client.events.DeleteEditShareEvent;
 import com.score.pics.client.events.DeleteEditShareHandler;
+import com.score.pics.client.login.LoginPlace;
+import com.score.pics.client.start.StartPlace;
 import com.score.pics.client.widgets.AddTopicSide2to5Widget;
 import com.score.pics.client.widgets.EditWidgetPresenter;
 import com.score.pics.client.widgets.SettingsWidgetPresenter;
 import com.score.pics.shared.CellContent;
+import com.score.pics.shared.LoginUser;
 import com.score.pics.shared.Sides2to5Entity;
 import com.score.pics.shared.TitleContentSourceProperty;
 
@@ -33,8 +37,11 @@ public class DetailActivity extends MGWTAbstractActivity {
 	private DetailView view;
 	private EventBus eventBus;
 	public Sides2to5Entity se;
+	public String placeToken, side;
 	
 	private EntryServiceAsync service = GWT.create(EntryService.class);
+
+	private GAEDatastoreServiceAsync service2 = GWT.create(GAEDatastoreService.class);
 	protected boolean delete;
 	protected boolean edit;
 	protected boolean share;
@@ -51,43 +58,68 @@ public class DetailActivity extends MGWTAbstractActivity {
 		
 		this.eventBus =  eventBus;
 		
+		String sessionID = Cookies.getCookie("sid");
 		
-		/*Handler for the CellList*/
-		addHandlerRegistration(view.getCellList().addCellSelectedHandler(new CellSelectedHandler() {
-			public void onCellSelected(CellSelectedEvent event) {
-				
-				int index = event.getIndex();
-				
-				String place = list.get(index).getTitle();
-				if(delete){
-					Dialogs.confirm("Delete?", place, new ConfirmCallback() {
-						public void onOk() {
-//							removeItems(key);
-//							deleteCategory(deletekey);
-//							updateList();
-						}
-						public void onCancel() {}
-					});
-				}else{
-					if(edit){
+		if(sessionID!=null){
+			
+			service2.checkSessionID(sessionID, new AsyncCallback<LoginUser>() {
+				public void onSuccess(LoginUser result) {
+					
+					if(result.isLoggedIn()){
 						
-						CellContent cc = list.get(index);
-						EditWidgetPresenter ewp = new EditWidgetPresenter(eventBus, clientFactory);
-						ewp.setCellContent(cc);
-						ewp.setSe(se);
-						ewp.show();
+						getStartList(placeToken, side);
 						
+						/*Handler for the CellList*/
+						addHandlerRegistration(view.getCellList().addCellSelectedHandler(new CellSelectedHandler() {
+							public void onCellSelected(CellSelectedEvent event) {
+								
+								final int index = event.getIndex();
+								
+								String place = list.get(index).getTitle();
+								if(delete){
+									Dialogs.confirm("Delete?", place, new ConfirmCallback() {
+										public void onOk() {
+											delete(index);
+										}
+										public void onCancel() {}
+									});
+								}else{
+									if(edit){
+										
+										CellContent cc = list.get(index);
+										EditWidgetPresenter ewp = new EditWidgetPresenter(eventBus, clientFactory);
+										ewp.setCellContent(cc);
+										ewp.setSe(se);
+										ewp.show();
+										
+									}else{
+										if(share){
+											Window.alert("Share: "+place);
+										}else{
+											
+											goToNextPlace(place);
+										}
+									}
+								}			
+							}
+						}));
 					}else{
-						if(share){
-							Window.alert("Share: "+place);
-						}else{
-							
-							goToNextPlace(place);
-						}
+						clientFactory.getPlaceController().goTo(new LoginPlace());
 					}
-				}			
-			}
-		}));
+				}
+				
+				@Override
+				public void onFailure(Throwable caught) {
+					Window.alert("Verbindungsproblem");
+				}
+			});
+			
+			
+		}else{
+			clientFactory.getPlaceController().goTo(new LoginPlace());
+		}
+		
+		
 		
 	}
 
@@ -119,13 +151,11 @@ public class DetailActivity extends MGWTAbstractActivity {
 					CellContent cc = new CellContent(title, content, source);
 					
 					list.add(cc);
-					
-					view.render(list);
-					view.refresh();
-					GUIHelper.setBackGroundColorInCellList(view.getCellListWidget(), list);
+
+					refreshList();
 					
 				}else{
-					Window.alert("Eintrag ist schon vorhanden");
+					Window.alert("Der Eintrag ist schon vorhanden");
 				}
 				
 			}
@@ -137,6 +167,32 @@ public class DetailActivity extends MGWTAbstractActivity {
 				delete = event.isDelete();
 				edit = event.isEdit();
 				share = event.isShare();
+			}
+		});
+	}
+	
+	private void delete(final int index){
+		
+		TitleContentSourceProperty tcp = new TitleContentSourceProperty();
+		tcp.setTitle(list.get(index).getTitle());
+		tcp.setContent(list.get(index).getContent());
+		tcp.setQuelle(list.get(index).getSource());
+		
+		service.delete(se, tcp, new AsyncCallback<Boolean>() {
+			
+			@Override
+			public void onSuccess(Boolean bool) {
+				if(bool.booleanValue()){
+					list.remove(index);
+					refreshList();
+				}else{
+					Window.alert("FALSE");
+				}
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Verbindungsproblem");	
 			}
 		});
 	}
@@ -164,9 +220,7 @@ public class DetailActivity extends MGWTAbstractActivity {
 					list.add(cc);
 				}
 				
-				view.render(list);
-				view.refresh();
-				GUIHelper.setBackGroundColorInCellList(view.getCellListWidget(), list);
+				refreshList();
 			}
 			public void onFailure(Throwable caught) {}
 		});
@@ -179,7 +233,11 @@ public class DetailActivity extends MGWTAbstractActivity {
 	 * */	
 	public void goToNextPlace(String place) {}
 	
-
+	private void refreshList(){
+		view.render(list);
+		view.refresh();
+		GUIHelper.setBackGroundColorInCellList(view.getCellListWidget(), list);
+	}
 
 	public void printValue() {	}
 	

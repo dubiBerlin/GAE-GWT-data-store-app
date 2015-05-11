@@ -161,34 +161,36 @@ public class EntryServiceImpl extends RemoteServiceServlet implements
 		List<String>ancestorPath = s25e.getAncestorPath();	
 		
 		datastore = DatastoreServiceFactory.getDatastoreService();
-		
-		Key key = getKey( side,  username, ancestorPath);
-		
-		
-//		System.out.println("Kompletter Key: "+key);
-		
-		
-		Query users = new Query(side, key);
-		
-		List<Entity> results = datastore.prepare(users)
-				.asList(FetchOptions.Builder.withDefaults   ());
-		
 		List<TitleContentSourceProperty> list = new ArrayList<TitleContentSourceProperty>();
 		
-		for(int i = 0; i < results.size(); i++){
-			TitleContentSourceProperty tce = new TitleContentSourceProperty();
-			tce.setTitle(results.get(i).getProperty("title").toString());
-
-			if(results.get(i).getProperty("content") instanceof Text){
-				tce.setContent(((Text)results.get(i).getProperty("content")).getValue());
-			}else {
-				tce.setContent(results.get(i).getProperty("content").toString());
-			}
-			tce.setQuelle(results.get(i).getProperty("source").toString());
-//			System.out.println("title: "+tce.getTitle());
+		
+		
+		if(username !=null){
+			Key key = getKey( side,  username, ancestorPath);
 			
-			list.add(tce);
-		}		
+			Query users = new Query(side, key);
+			
+			List<Entity> results = datastore.prepare(users)
+					.asList(FetchOptions.Builder.withDefaults   ());
+			
+			
+			for(int i = 0; i < results.size(); i++){
+				TitleContentSourceProperty tce = new TitleContentSourceProperty();
+				tce.setTitle(results.get(i).getProperty("title").toString());
+
+				if(results.get(i).getProperty("content") instanceof Text){
+					tce.setContent(((Text)results.get(i).getProperty("content")).getValue());
+				}else {
+					tce.setContent(results.get(i).getProperty("content").toString());
+				}
+				tce.setQuelle(results.get(i).getProperty("source").toString());
+//				System.out.println("title: "+tce.getTitle());
+				
+				list.add(tce);
+			}	
+		}
+		
+	
 		return list;
 	}
 	
@@ -214,10 +216,7 @@ public class EntryServiceImpl extends RemoteServiceServlet implements
 		
 		Key key = getKey( side,  username, ancestorPath);
 		
-		
-		
 		if( !entryExistsPart2(key, title, "title", side) ){
-			System.out.println("Title nicht vorhanden");
 			Entity e = new Entity(side,key);
 			e.setProperty("title", title);
 			
@@ -246,12 +245,6 @@ public class EntryServiceImpl extends RemoteServiceServlet implements
 	
 	private Key getKey(String side, String username, List<String> ancestorPath){
 		
-//		System.out.println("getKey() side:"+side+" username:"+username);
-//		System.out.print("ancestorPath: ");
-//		for(int i = 0; i < ancestorPath.size(); i++){
-//			System.out.print(ancestorPath.get(i)+" ");
-//		}
-		
 		Key key = null;
 		/* Build the Key*/
 		if(side.equals(StringResources.side2Identifier())){
@@ -264,13 +257,13 @@ public class EntryServiceImpl extends RemoteServiceServlet implements
 			}else{
 				if(side.equals(StringResources.side4Identifier())){
 					key = new KeyFactory.Builder("benutzer", username).
-							addChild(StringResources.side2Identifier(), ancestorPath.get(1)).
+							addChild(StringResources.startSideIdentifier(), ancestorPath.get(1)).
 							addChild(StringResources.side2Identifier(), ancestorPath.get(2)).
 							addChild(StringResources.side3Identifier(), ancestorPath.get(3)).getKey();
 				}else{
 					if(side.equals(StringResources.side5Identifier())){
 						key = new KeyFactory.Builder("benutzer", username).
-								addChild(StringResources.side2Identifier(), ancestorPath.get(1)).
+								addChild(StringResources.startSideIdentifier(), ancestorPath.get(1)).
 								addChild(StringResources.side2Identifier(), ancestorPath.get(2)).
 								addChild(StringResources.side3Identifier(), ancestorPath.get(3)).
 								addChild(StringResources.side4Identifier(), ancestorPath.get(4)).getKey();
@@ -278,7 +271,7 @@ public class EntryServiceImpl extends RemoteServiceServlet implements
 				}
 			}
 		}
-		System.out.println("\nreturned key: "+key);
+//		System.out.println("\nreturned key: "+key);
 		return key;
 	}
 
@@ -294,15 +287,178 @@ public class EntryServiceImpl extends RemoteServiceServlet implements
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+
+	
+//	@Override
+//	public TitleContentSourceProperty delete(Sides2to5Entity s25e, TitleContentSourceProperty object) {
+//		
+//		datastore = DatastoreServiceFactory.getDatastoreService();
+//		
+//		String title = object.getTitle();
+//		String side  = s25e.getSide();
+//		String username = s25e.getUsername();
+//		List<String>ancestorPath = s25e.getAncestorPath();	
+//		
+//		System.out.println("Side: "+side);
+//		
+//		// Hat der eintrag kinder?
+//
+//		// 1. Auf alle child Entries zugreifen
+//		String next_side = getNextSide(side);
+//		System.out.println("next side: "+next_side);
+//		
+//		
+//		List<String>erweiternAncestorPath = ancestorPath;
+//		erweiternAncestorPath.add(title);
+//		
+//		Key childKey = getKey(next_side, username, erweiternAncestorPath);
+//		
+//		Query users = new Query(next_side, childKey);
+//		
+//		List<Entity> results = datastore.prepare(users).asList(FetchOptions.Builder.withDefaults());
+//		
+//		if(!results.isEmpty()){
+//			System.out.println("Delete");
+//			for(int i = 0; i < results.size(); i++){
+//				
+//				traverse(results.get(i), ancestorPath, username);
+////				datastore.delete(results.get(i).getKey());
+//			}
+//			
+//			
+//		}
+//		
+//		System.out.println("Der Ancestor-path am Ende:");
+//		printAncestorPath(ancestorPath);
+//		return null;
+//	}
+	
+	
+	@Override
+	public boolean delete(Sides2to5Entity s25e, TitleContentSourceProperty tcsProperty) {
+		
+		datastore = DatastoreServiceFactory.getDatastoreService();
+		
+		String title = tcsProperty.getTitle();
+		String side  = s25e.getSide();
+		String username = s25e.getUsername();
+		List<String>ancestorPath = s25e.getAncestorPath();	
+		
+		// Hat der eintrag kinder?
+		
+		// 1. Auf alle child Entries zugreifen
+		String next_side = getNextSide(side);		
+		
+		List<String>erweiternAncestorPath = ancestorPath;
+		erweiternAncestorPath.add(title);
+		
+		Key childKey = getKey(next_side, username, erweiternAncestorPath);
+		
+		Query users = new Query(next_side, childKey);
+		
+		List<Entity> results = datastore.prepare(users).asList(FetchOptions.Builder.withDefaults());
+		
+		if(!results.isEmpty()){
+			for(int i = 0; i < results.size(); i++){
+				datastore.delete(results.get(i).getKey());
+				traverse(results.get(i), ancestorPath, username);				
+			}
+		}
+		
+		// 2. Die ausgesuchte Entity löschen
+		deleteSingleEntity(s25e, tcsProperty);
+		
+		return true;
+	}
+	
+	private void deleteSingleEntity(Sides2to5Entity s25e, TitleContentSourceProperty tcsProperty){
+		
+		String side  = s25e.getSide();
+		String username = s25e.getUsername();
+		List<String>ancestorPath = s25e.getAncestorPath();	
+		
+		Key key = getKey( side,  username, ancestorPath);
+		Filter titleFilter =  new FilterPredicate("title",
+                FilterOperator.EQUAL,
+                tcsProperty.getTitle());
+
+		Query q = new Query(side).setAncestor(key).setFilter(titleFilter);
+		
+		PreparedQuery pq = datastore.prepare(q);
+		
+		Entity e = pq.asSingleEntity();
+		datastore.delete(e.getKey());
+		
+	}
+	
+	private void traverse(Entity entity, List<String> ancestorPath, String username){
+		System.out.println("\nTRAVERSE");
+
+		
+		datastore = DatastoreServiceFactory.getDatastoreService();
+		
+		String side = entity.getKind();
+		System.out.println("SIDE: "+side);
+		System.out.println("TITLE: "+entity.getProperty("title"));
+		
+		String next_side = getNextSide(side);
+		
+		System.out.println("NEXT SIDE: "+next_side);
+		
+		String title = entity.getProperty("title").toString();
+		
+//		printAncestorPath(ancestorPath);
+		
+		List<String>erweiternAncestorPath = copyList(ancestorPath);
+		erweiternAncestorPath.add(title);
+		
+//		printAncestorPath(erweiternAncestorPath);
+		
+		Key childKey = getKey(next_side, username, erweiternAncestorPath);
+		
+		Query users = new Query(next_side, childKey);
+		
+		List<Entity> results = datastore.prepare(users).asList(FetchOptions.Builder.withDefaults());
+		
+		if(results.size()>0){
+			System.out.println("result is not empty");
+			for(int i = 0; i < results.size(); i++){
+				System.out.println("title: "+results.get(i).getProperty("title"));
+				datastore.delete(results.get(i).getKey());
+				traverse(results.get(i), erweiternAncestorPath, username);
+//				System.out.println("ITS DELETED IN THE traverse() METHOD");
+//				datastore.delete(results.get(i).getKey());
+			}	
+			return;
+		}else{
+			System.out.println("nix gefunden");			
+			return;
+		}
+	}
+	
+	private List<String> copyList(List<String> list){
+		List<String> copiedList = new ArrayList<String>();
+		
+		for(int i = 0; i < list.size(); i++){
+			copiedList.add(list.get(i));
+		}
+		return copiedList;
+	}
+	
+	private void printAncestorPath(List<String> ancestorPath){
+		for(int i = 0; i < ancestorPath.size(); i++){
+			System.out.print(ancestorPath.get(i)+" ; ");
+		}
+		System.out.println("");
+	}
+	
 
 	/**/
 	@Override
 	public TitleContentSourceProperty edit(Sides2to5Entity s25e, TitleContentSourceProperty object) {
 		
-//		System.out.println("EntryServiceImpl edit() method!");
-		System.out.println("new title: "+object.getNew_title());
 		datastore = DatastoreServiceFactory.getDatastoreService();
-		
 		
 		String title = object.getTitle();
 		String side  = s25e.getSide();
@@ -341,10 +497,7 @@ public class EntryServiceImpl extends RemoteServiceServlet implements
 			 *    with the new id=title and the contents.
 			 *    
 			 * */
-			if(!title.equals(object.getNew_title())&& (object.getNew_title()!=null || !object.getNew_title().equals(""))){
-				
-				System.out.println(title+" equals not "+object.getNew_title());
-				
+			if(!title.equals(object.getNew_title())&& (object.getNew_title()!=null || !object.getNew_title().equals(""))){				
 				/*
 				 * 1. does child Entries exist? If yes, all the child entries have to be changed */ 
 				if(!side.equals(StringResources.side5Identifier())){
@@ -475,7 +628,7 @@ public class EntryServiceImpl extends RemoteServiceServlet implements
 	 * Returns the name of the next side
 	 * */
 	private String getNextSide(String side) {
-		
+//		System.out.println("getNextSide(): "+side);
 		if(side.equals(StringResources.startSideIdentifier())){
 			return StringResources.side2Identifier();
 		}
@@ -512,6 +665,7 @@ public class EntryServiceImpl extends RemoteServiceServlet implements
 		return "";
 		
 	}
+
 
 	
 }

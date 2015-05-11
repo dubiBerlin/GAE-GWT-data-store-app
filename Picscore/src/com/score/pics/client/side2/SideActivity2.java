@@ -27,13 +27,14 @@ public class SideActivity2 extends DetailActivity {
 		super.start(panel, eventBus);
 		view = clientFactory.getSide2ViewImpl();
 		final SidePlace2 place = (SidePlace2)clientFactory.getPlaceController().getWhere();
+		
+		
+		
 		token = place.getToken();
+		this.placeToken  = place.getToken();
+		this.side = StringResources.side2Identifier();
 		
 		clientFactory.pushHistoryTracker(token);
-		
-		
-		
-		getStartList(token, StringResources.side2Identifier());
 		
 		String sessionID = Cookies.getCookie("sid");
 		

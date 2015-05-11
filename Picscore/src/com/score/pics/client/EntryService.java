@@ -16,6 +16,7 @@ public interface EntryService extends RemoteService {
 	public List<TitleContentSourceProperty> getTopicsFromSide2To5( Sides2to5Entity s25e);
 	public TitleContentSourceProperty saveTitleContentObject(Sides2to5Entity s25e, TitleContentSourceProperty object);
 	public TitleContentSourceProperty edit(Sides2to5Entity s25e, TitleContentSourceProperty object);
+	public boolean delete(Sides2to5Entity s25e, TitleContentSourceProperty object);
 	public TitleContentSourceProperty editTitleProperty(Sides2to5Entity s25e, String title);
 
 }

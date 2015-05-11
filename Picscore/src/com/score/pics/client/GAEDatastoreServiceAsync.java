@@ -10,4 +10,5 @@ public interface GAEDatastoreServiceAsync {
 	void registerUser(User user, AsyncCallback<String> callback)throws IllegalArgumentException;
 	void login(LoginUser login, AsyncCallback<LoginUser> callback)throws IllegalArgumentException;
 	void checkSessionID(String sessionID, AsyncCallback<LoginUser> callback)throws IllegalArgumentException;
+	void logout(AsyncCallback<Void> callback)throws  IllegalArgumentException;
 }

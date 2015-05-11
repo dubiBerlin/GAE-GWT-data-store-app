@@ -75,10 +75,16 @@
 	9.1. Dem TitleContentSourceProperty Objekt neuen Parameter hinzugefügt -> String new_title
 	9.2. Neues Objekt
 
+	Delete kommt jetzt
+
 
 10. falls der Titel schon vorhanden ist, dann soll die Überprüfung clientseitig erfolgen
     und nicht mehr serverseitig.
-
+    
+   
+11. Logout einbauen	
+	11.1. Einen Logout-Button in das SettingsWidget einbauen
+	11.2. 
 
 
 

@@ -36,7 +36,7 @@ public class StartViewImpl implements StartView {
 		
 		headerLabel = new Label();
 		
-		HeaderPanel headerpanel = com.score.pics.client.GUIHelper.getHeaderPanel(headerLabel, settingsBttn, imageBttn);
+		HeaderPanel headerpanel = com.score.pics.client.GUIHelper.getHeaderPanel(headerLabel, imageBttn, settingsBttn);
 		
 		
 		scrllPnl = new ScrollPanel();

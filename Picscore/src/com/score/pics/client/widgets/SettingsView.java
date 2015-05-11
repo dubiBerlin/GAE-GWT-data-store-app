@@ -6,6 +6,7 @@ import com.googlecode.mgwt.dom.client.event.tap.HasTapHandlers;
 
 public interface SettingsView extends IsWidget {
 	public HasTapHandlers getCancelImageButton();
+	public HasTapHandlers getLogoutButton();
 	public HasTapHandlers getEditHandler();
 	public HasTapHandlers getDeleteHandler();
 	public HasTapHandlers getShareHandler();

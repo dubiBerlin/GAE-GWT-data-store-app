@@ -44,7 +44,6 @@ public class LoginActivity extends MGWTAbstractActivity {
 		 * Ist Cookie gesetzt navigiere zur Start Seite
 		 * */
 		if(sessionID!=null){
-			
 			service.checkSessionID(sessionID, new AsyncCallback<LoginUser>() {
 				public void onSuccess(LoginUser result) {
 					

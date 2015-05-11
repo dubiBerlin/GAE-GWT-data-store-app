@@ -28,7 +28,7 @@ public class StringResources {
 	}
 	
 	public static String side4Identifier(){
-		return "seite5";
+		return "seite4";
 	}
 	
 	public static String side5Identifier(){

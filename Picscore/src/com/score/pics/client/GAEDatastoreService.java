@@ -16,6 +16,7 @@ public interface GAEDatastoreService extends RemoteService{
 	
 	public LoginUser checkSessionID(String sessionID);
 	
+	public void logout();
 	
 	
 }

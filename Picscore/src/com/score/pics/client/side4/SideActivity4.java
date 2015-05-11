@@ -1,9 +1,6 @@
 package com.score.pics.client.side4;
 
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.Cookies;
-import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.web.bindery.event.shared.EventBus;
@@ -37,8 +34,8 @@ public class SideActivity4 extends DetailActivity {
 		
 		clientFactory.pushHistoryTracker(token);
 		
-		
-		getStartList(place.getToken(), StringResources.side4Identifier());
+		this.placeToken  = place.getToken();
+		this.side = StringResources.side4Identifier();
 		
 		String sessionID = Cookies.getCookie("sid");
 		

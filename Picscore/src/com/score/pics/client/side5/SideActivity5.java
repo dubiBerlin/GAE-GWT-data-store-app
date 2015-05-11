@@ -32,10 +32,9 @@ public class SideActivity5 extends DetailActivity {
 		
 		clientFactory.pushHistoryTracker(token);
 		
-		
-		getStartList(place.getToken(), StringResources.side3Identifier());
-		
-		
+
+		this.placeToken  = place.getToken();
+		this.side = StringResources.side5Identifier();
 
 		clientFactory.setIDOFPreviousSide(place.getToken());
 		

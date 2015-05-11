@@ -146,6 +146,15 @@ public class GAEDatastoreServiceImpl extends RemoteServiceServlet
 		lg.setLoggedIn(false);
 		return lg;
 	}
+
+	@Override
+	public void logout() {
+		
+		HttpServletRequest httpServletRequest = this.getThreadLocalRequest();
+        HttpSession session = httpServletRequest.getSession();
+        session.removeAttribute("loginUser");
+		
+	}
 	
 	
 
