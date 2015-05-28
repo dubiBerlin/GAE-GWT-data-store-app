@@ -49,6 +49,7 @@ public class StringResources {
 	}
 	
 	
+	
 	// MELDUNGEN, FEHLER UND SUCCESS
 	
 	/*
@@ -63,4 +64,8 @@ public class StringResources {
 		return "<div id='"+id+"' >"+successMessage+"</div>";
 	}//class='success_message'
 	
+	
+	public static String serverConnectionFailed(){
+		return "Verbindungsproblem";
+	}
 }

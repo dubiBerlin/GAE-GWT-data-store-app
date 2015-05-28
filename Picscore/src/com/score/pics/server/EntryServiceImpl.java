@@ -25,6 +25,10 @@ import com.score.pics.shared.TitleContentSourceProperty;
 public class EntryServiceImpl extends RemoteServiceServlet implements
 		EntryService {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private DatastoreService datastore;
 	
 
@@ -517,7 +521,16 @@ public class EntryServiceImpl extends RemoteServiceServlet implements
 							
 							
 							String copyTitle = results.get(i).getProperty("title").toString();
-							String copyContent = results.get(i).getProperty("content").toString();
+							String copyContent = "";//results.get(i).getProperty("content").toString();
+							
+							if(results.get(i).getProperty("content") instanceof Text){
+								
+								Text text = (Text)results.get(i).getProperty("content");
+								copyContent = text.getValue();
+								
+							}else {
+								copyContent = results.get(i).getProperty("content").toString();
+							}
 							String copySource = results.get(i).getProperty("source").toString();
 
 							Entity e = new Entity(next_side, new_key);

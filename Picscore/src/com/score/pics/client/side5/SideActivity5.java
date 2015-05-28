@@ -1,7 +1,6 @@
 package com.score.pics.client.side5;
 
 import com.google.gwt.user.client.Cookies;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.web.bindery.event.shared.EventBus;
 import com.score.pics.client.ClientFactory;
@@ -50,8 +49,4 @@ public class SideActivity5 extends DetailActivity {
 	}
 	
 	
-	@Override
-	public void printValue() {
-		Window.alert("Side5: "+token);
-	}
 }

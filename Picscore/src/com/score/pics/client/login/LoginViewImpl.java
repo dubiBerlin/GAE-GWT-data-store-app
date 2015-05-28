@@ -28,6 +28,7 @@ public class LoginViewImpl implements LoginView {
 		AppBundle.INSTANCE.getCss().ensureInjected();
 		
 		mainPnl = new FlexPanel();
+		mainPnl.getElement().getStyle().setBackgroundColor("white");
 		mainPnl.setSize("100%", "100%");
 
 		
@@ -75,6 +76,7 @@ public class LoginViewImpl implements LoginView {
 		
 		distance = GUIHelper.distance10PX();
 		loginButton = new Button("Login");
+		loginButton.getElement().getStyle().setBorderColor("white");
 		loginButton.setImportant(true);
 		loginButton.setWidth("90%");
 		body.add(distance);
@@ -84,8 +86,9 @@ public class LoginViewImpl implements LoginView {
 		registerButton= new Button("Register");
 		registerButton.setWidth("90%");
 		registerButton.setSmall(true);
-		registerButton.getElement().getStyle().setBackgroundColor("white");
+		registerButton.getElement().getStyle().setBackgroundColor("#eb8c98");//("#8BDE7C");
 		registerButton.getElement().getStyle().setBorderColor("white");
+		registerButton.getElement().getStyle().setColor("white");
 		body.add(distance);
 		body.add(registerButton);
 		

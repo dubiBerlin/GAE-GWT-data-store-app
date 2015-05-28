@@ -1,7 +1,6 @@
 package com.score.pics.client.side2;
 
 import com.google.gwt.user.client.Cookies;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.web.bindery.event.shared.EventBus;
 import com.score.pics.client.ClientFactory;
@@ -49,14 +48,11 @@ public class SideActivity2 extends DetailActivity {
 	
 	@Override
 	public void goToNextPlace(String place) {
+		clientFactory.setIDOFPreviousSide(token);
 		clientFactory.getPlaceController().goTo(new SidePlace3(place));
 	}
 	
 	
-	@Override
-	public void printValue() {
-		Window.alert("Side2: "+token);
-	}
 	
 	
 }

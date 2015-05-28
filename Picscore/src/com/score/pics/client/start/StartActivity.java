@@ -24,7 +24,9 @@ import com.score.pics.client.helper.GUIHelper;
 import com.score.pics.client.login.LoginPlace;
 import com.score.pics.client.side2.SidePlace2;
 import com.score.pics.client.widgets.AddTopicWidget;
+import com.score.pics.client.widgets.SettingsWidgetPresenter;
 import com.score.pics.shared.LoginUser;
+import com.score.pics.shared.StringResources;
 
 
 public class StartActivity extends MGWTAbstractActivity {
@@ -97,6 +99,13 @@ public class StartActivity extends MGWTAbstractActivity {
 							}
 						}));
 						
+						addHandlerRegistration(view.getSettingsButton().addTapHandler(new TapHandler() {
+							public void onTap(TapEvent event) {
+								SettingsWidgetPresenter sw = new SettingsWidgetPresenter(eventBus, clientFactory);
+								sw.show();
+							}
+						}));
+						
 						panel.setWidget(view);
 					
 					}else{
@@ -108,14 +117,13 @@ public class StartActivity extends MGWTAbstractActivity {
 				
 				@Override
 				public void onFailure(Throwable caught) {
-					Window.alert("Verbindungsproblem");
+					Window.alert(StringResources.serverConnectionFailed());
 				}
 			});
 			
 			
 		}
 		else{
-			Window.alert("SessionID == null");
 			clientFactory.getPlaceController().goTo(new LoginPlace());
 		}
 		

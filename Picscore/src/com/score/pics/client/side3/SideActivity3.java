@@ -1,7 +1,5 @@
 package com.score.pics.client.side3;
 
-import com.google.gwt.user.client.Cookies;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.web.bindery.event.shared.EventBus;
 import com.score.pics.client.ClientFactory;
@@ -37,21 +35,12 @@ public class SideActivity3 extends DetailActivity {
 		
 		clientFactory.pushHistoryTracker(token);
 		
-		String sessionID = Cookies.getCookie("sid");
-		
-		if(sessionID!=null){
-			setHandler();
-		}
+		setHandler();
 		
 		
 		view.setHeaderTitle(token);
 		
 		panel.setWidget(view);
-	}
-	
-	@Override
-	public void printValue() {
-		Window.alert("Side3: "+token);
 	}
 	
 	@Override

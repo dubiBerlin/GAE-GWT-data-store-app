@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.core.shared.GWT;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
@@ -97,6 +100,10 @@ public class DetailActivity extends MGWTAbstractActivity {
 											Window.alert("Share: "+place);
 										}else{
 											
+											/*
+											 * Just redirect to the next side as example from
+											 *  Side2 to Side3
+											 * */
 											goToNextPlace(place);
 										}
 									}
@@ -110,7 +117,7 @@ public class DetailActivity extends MGWTAbstractActivity {
 				
 				@Override
 				public void onFailure(Throwable caught) {
-					Window.alert("Verbindungsproblem");
+					Window.alert("Verbindungsproblem "+caught.getMessage());
 				}
 			});
 			
@@ -144,15 +151,7 @@ public class DetailActivity extends MGWTAbstractActivity {
 		eventBus.addHandler(AddTopicSide2to5Event.TYPE, new AddTopicSide2to5EventHandler() {
 			public void speichern(AddTopicSide2to5Event event) {
 				if(event.getTce()!=null){
-					String title = event.getTce().getTitle();
-					String content = event.getTce().getContent();
-					String source= event.getTce().getQuelle();
-					
-					CellContent cc = new CellContent(title, content, source);
-					
-					list.add(cc);
-
-					refreshList();
+					getStartList( placeToken,  side);
 					
 				}else{
 					Window.alert("Der Eintrag ist schon vorhanden");
@@ -161,6 +160,12 @@ public class DetailActivity extends MGWTAbstractActivity {
 			}
 		});
 		
+		/*
+		 * This event is fired after the user presses the close button.
+		 * It provides three boolean values in order to know what has to happen after
+		 * the user presses on a cell of the cellList. There are only three options
+		 * of choice delete, edit and share. Only one can be true.
+		 * */
 		eventBus.addHandler(DeleteEditShareEvent.TYPE, new DeleteEditShareHandler() {
 			public void deleteOrEditCategory(DeleteEditShareEvent event) {
 				
@@ -169,6 +174,17 @@ public class DetailActivity extends MGWTAbstractActivity {
 				share = event.isShare();
 			}
 		});
+		
+		/* If the user navigates back to the previous side through pressing
+		 * on the back button, the current list of the current side will be deleted
+		 * because if the user navigates again from the previous side to the
+		 * next side, the old entries are visible for a second.*/
+		History.addValueChangeHandler(new ValueChangeHandler<String>() {
+			public void onValueChange(ValueChangeEvent<String> event) {
+				list = new ArrayList<CellContent>();
+			}
+		});
+
 	}
 	
 	private void delete(final int index){
@@ -239,7 +255,6 @@ public class DetailActivity extends MGWTAbstractActivity {
 		GUIHelper.setBackGroundColorInCellList(view.getCellListWidget(), list);
 	}
 
-	public void printValue() {	}
 	
 	
 }

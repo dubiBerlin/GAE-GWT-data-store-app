@@ -76,9 +76,8 @@ public class SettingsViewImpl implements SettingsView {
 		
 		Label de3 = GUIHelper.distance10PX();
 		loggout = new Button("Logout");
-		loggout.setRound(true);
 		loggout.setWidth("90%");
-		loggout.getElement().getStyle().setBackgroundColor("#FF1A5B");
+		loggout.getElement().getStyle().setBackgroundColor("#eb8c98");
 		loggout.getElement().getStyle().setBorderColor("white");
 		loggout.getElement().getStyle().setColor("white");
 		

@@ -1,6 +1,9 @@
 package com.score.pics.client.register;
 
+import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.TextAlign;
+import com.google.gwt.dom.client.Style.Visibility;
+import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
@@ -36,7 +39,7 @@ public class RegisterMobileViewImpl implements RegisterMobileView {
 	private MPasswordTextBox passwordRepeat;
 	private Button submit;
 	private HeaderPanel headerPnl;
-	private HTML messageLabel;
+	private Label messageLabel;
 	private Label distance1, distance2;
 	private FlexPanel newMainPnl;
 	
@@ -116,10 +119,12 @@ public class RegisterMobileViewImpl implements RegisterMobileView {
 		mainPanelMobile.add(submit);
 		mainPanelMobile.add(distance1);
 		
-		messageLabel = new HTML();
+		messageLabel = new Label();
 		messageLabel.setHeight("4em");
 		messageLabel.getElement().setId("messageID");
 		messageLabel.setWidth("90%");
+		messageLabel.getElement().getStyle().setBackgroundColor("red");
+//		DOM.getElementById("messageID").getStyle().setVisibility(Visibility.HIDDEN);
 		messageLabel.getElement().getStyle().setTextAlign(TextAlign.CENTER);
 		mainPanelMobile.add(messageLabel);
 		

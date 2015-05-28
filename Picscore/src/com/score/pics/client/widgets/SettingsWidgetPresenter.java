@@ -17,6 +17,7 @@ import com.score.pics.client.GAEDatastoreService;
 import com.score.pics.client.GAEDatastoreServiceAsync;
 import com.score.pics.client.events.DeleteEditShareEvent;
 import com.score.pics.client.login.LoginPlace;
+import com.score.pics.shared.StringResources;
 
 
 public class SettingsWidgetPresenter extends DialogOverlay {
@@ -49,9 +50,7 @@ public class SettingsWidgetPresenter extends DialogOverlay {
 				eventBus.fireEvent(new DeleteEditShareEvent(delete_it, edit_it, share_it));
 			}
 		});
-		
-		final String sessionID = Cookies.getCookie("sid");
-		
+				
 		view.getEditHandler().addTapHandler(new TapHandler() {
 			public void onTap(TapEvent event) {
 				if(edit_it){
@@ -105,7 +104,7 @@ public class SettingsWidgetPresenter extends DialogOverlay {
 							}
 							
 							public void onFailure(Throwable caught) {
-								Window.alert("Verbindungsproblem");
+								Window.alert(StringResources.serverConnectionFailed());
 							}
 						});
 						

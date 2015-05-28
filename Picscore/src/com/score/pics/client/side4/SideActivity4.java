@@ -1,7 +1,5 @@
 package com.score.pics.client.side4;
 
-import com.google.gwt.user.client.Cookies;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.web.bindery.event.shared.EventBus;
 import com.score.pics.client.ClientFactory;
@@ -37,11 +35,9 @@ public class SideActivity4 extends DetailActivity {
 		this.placeToken  = place.getToken();
 		this.side = StringResources.side4Identifier();
 		
-		String sessionID = Cookies.getCookie("sid");
 		
-		if(sessionID!=null){
-			setHandler();
-		}
+		setHandler();
+		
 		
 		view.setHeaderTitle(place.getToken());
 		
@@ -58,8 +54,4 @@ public class SideActivity4 extends DetailActivity {
 	}
 	
 	
-	@Override
-	public void printValue() {
-		Window.alert("Side4: "+token);
-	}
 }

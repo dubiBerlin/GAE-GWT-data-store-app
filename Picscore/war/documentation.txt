@@ -85,6 +85,18 @@
 11. Logout einbauen	
 	11.1. Einen Logout-Button in das SettingsWidget einbauen
 	11.2. 
+	
+12. Registrierung ändern
+	- Vor und nachname entfernen
+	- Password wiederholen
+	
+13. Profiloption im SettingsWidget einbauen
+    - Daten anzeigen lassen wie Name, Username
+    - Option zur Passwordänderung einbauen
+    
+14. StartSeite soll auch von Detail erben   
+
+
 
 
 
@@ -118,6 +130,7 @@ LETZEN AUFGABEN:
 - Eine Activity erstellen die von DetailActivity erbt und von der alle Sides Activities erben
   damit DetailActivity abhängiger wird und freier von Logik.
 
+- gquery RegisterViewImpl Fehlermeldung, fadeout reagiert nicht beim ersten klick
 
 - Sonderzeichen eingeben verboten im Login und bei der Registrierung
 
