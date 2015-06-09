@@ -14,8 +14,8 @@ import com.score.pics.client.EntryService;
 import com.score.pics.client.EntryServiceAsync;
 import com.score.pics.client.events.AddTopicSide2to5Event;
 import com.score.pics.shared.CellContent;
-import com.score.pics.shared.Sides2to5Entity;
-import com.score.pics.shared.TitleContentSourceProperty;
+import com.score.pics.shared.Sides2to5EntityDTO;
+import com.score.pics.shared.TitleContentSourcePropertyDTO;
 
 public class EditWidgetPresenter extends DialogOverlay {
 
@@ -24,7 +24,7 @@ public class EditWidgetPresenter extends DialogOverlay {
 	private AddTopicSide2to5View view;	
 	private CellContent cellContent;
 	private EntryServiceAsync service = GWT.create(EntryService.class);
-	private Sides2to5Entity se;
+	private Sides2to5EntityDTO se;
 	private ClientFactory clientFactory;
 	private EventBus eventBus;
 	
@@ -54,7 +54,7 @@ public class EditWidgetPresenter extends DialogOverlay {
 
 				// 1. check if the title was changed. The title is part of the description of the entity on the next side.
 				//    If the title was changed than all the entity description of the next side have to ba changed.
-				TitleContentSourceProperty tce = new TitleContentSourceProperty();
+				TitleContentSourcePropertyDTO tce = new TitleContentSourcePropertyDTO();
 				tce.setTitle(cellContent.getTitle());
 				if(!new_title.equals(old_title)){
 					tce.setNew_title(new_title);
@@ -62,8 +62,8 @@ public class EditWidgetPresenter extends DialogOverlay {
 				tce.setContent(new_content);
 				tce.setQuelle(new_source);
 				
-				service.edit(se, tce, new AsyncCallback<TitleContentSourceProperty>() {
-					public void onSuccess(TitleContentSourceProperty result) {
+				service.edit(se, tce, new AsyncCallback<TitleContentSourcePropertyDTO>() {
+					public void onSuccess(TitleContentSourcePropertyDTO result) {
 						evenbus.fireEvent(new AddTopicSide2to5Event(result));
 					}
 					public void onFailure(Throwable caught) {
@@ -102,12 +102,12 @@ public class EditWidgetPresenter extends DialogOverlay {
 	}
 
 
-	public Sides2to5Entity getSe() {
+	public Sides2to5EntityDTO getSe() {
 		return se;
 	}
 
 
-	public void setSe(Sides2to5Entity se) {
+	public void setSe(Sides2to5EntityDTO se) {
 		this.se = se;
 	}
 

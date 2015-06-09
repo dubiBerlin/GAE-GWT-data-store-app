@@ -1,3 +1,4 @@
+
 package com.score.pics.client;
 
 import java.util.ArrayList;
@@ -30,8 +31,8 @@ import com.score.pics.client.widgets.EditWidgetPresenter;
 import com.score.pics.client.widgets.SettingsWidgetPresenter;
 import com.score.pics.shared.CellContent;
 import com.score.pics.shared.LoginUser;
-import com.score.pics.shared.Sides2to5Entity;
-import com.score.pics.shared.TitleContentSourceProperty;
+import com.score.pics.shared.Sides2to5EntityDTO;
+import com.score.pics.shared.TitleContentSourcePropertyDTO;
 
 public class DetailActivity extends MGWTAbstractActivity {
 
@@ -39,7 +40,7 @@ public class DetailActivity extends MGWTAbstractActivity {
 	public List<CellContent>list;
 	private DetailView view;
 	private EventBus eventBus;
-	public Sides2to5Entity se;
+	public Sides2to5EntityDTO se;
 	public String placeToken, side;
 	
 	private EntryServiceAsync service = GWT.create(EntryService.class);
@@ -126,8 +127,6 @@ public class DetailActivity extends MGWTAbstractActivity {
 			clientFactory.getPlaceController().goTo(new LoginPlace());
 		}
 		
-		
-		
 	}
 
 	public void setHandler(){
@@ -189,7 +188,7 @@ public class DetailActivity extends MGWTAbstractActivity {
 	
 	private void delete(final int index){
 		
-		TitleContentSourceProperty tcp = new TitleContentSourceProperty();
+		TitleContentSourcePropertyDTO tcp = new TitleContentSourcePropertyDTO();
 		tcp.setTitle(list.get(index).getTitle());
 		tcp.setContent(list.get(index).getContent());
 		tcp.setQuelle(list.get(index).getSource());
@@ -218,30 +217,47 @@ public class DetailActivity extends MGWTAbstractActivity {
 
 		list = new ArrayList<CellContent>();
 		
-		se = new Sides2to5Entity();
+		se = new Sides2to5EntityDTO();
 		se.setUsername(clientFactory.getUserName());
 		se.setTitle(placeToken);
 		se.setSide(side);
 		se.setAncestorPath(clientFactory.getAncestorPath());
 	
 		
-		service.getTopicsFromSide2To5(se, new AsyncCallback<List<TitleContentSourceProperty>>() {
-			public void onSuccess(List<TitleContentSourceProperty> result) {
+		service.getTopicsFromSide2To5(se, new AsyncCallback<List<TitleContentSourcePropertyDTO>>() {
+			public void onSuccess(List<TitleContentSourcePropertyDTO> result) {
 				
 				for(int i = 0; i < result.size(); i++){
-					String title = result.get(i).getTitle();
-					String content = result.get(i).getContent();
-					String source = result.get(i).getQuelle();
+					String title = result.get(i).getTitle()+"";
+					String content = result.get(i).getContent()+"";
+					String source = result.get(i).getQuelle()+"";
 					CellContent cc = new CellContent(title, content, source);
+					
 					list.add(cc);
 				}
-				
 				refreshList();
 			}
 			public void onFailure(Throwable caught) {}
 		});
 		
 	}
+	
+	
+//	public void getStartList(String placeToken, String side){
+//		
+//		list = new ArrayList<CellContent>();
+//		
+//		for(int i = 0; i < 10; i++){
+//			String title = "title "+i;
+//			String content = "content "+i;
+//			String source = "source "+i;
+//			CellContent cc = new CellContent(title, content, source);
+//			list.add(cc);
+//		}
+//		
+//		refreshList();
+//		
+//	}
 	
 	/*
 	 * Must be implemented by the Side2-Side4 Activities because 
@@ -258,5 +274,3 @@ public class DetailActivity extends MGWTAbstractActivity {
 	
 	
 }
-	
-

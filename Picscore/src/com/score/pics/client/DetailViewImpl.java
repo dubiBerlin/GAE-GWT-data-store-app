@@ -2,6 +2,7 @@ package com.score.pics.client;
 
 import java.util.List;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.HasTapHandlers;
@@ -39,7 +40,7 @@ public class DetailViewImpl implements DetailView {
 		
 		
 		scrollPanel = new ScrollPanel();
-		
+		scrollPanel.setSize("100%", "100%");
 		cellList = new CellList<CellContent>(new RestCell());
 		scrollPanel.add(cellList);
 		

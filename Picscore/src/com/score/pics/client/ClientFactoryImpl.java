@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.google.gwt.place.shared.PlaceController;
+import com.google.gwt.user.client.Window;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 import com.score.pics.client.login.LoginView;
@@ -20,6 +21,7 @@ import com.score.pics.client.side5.SideView5;
 import com.score.pics.client.side5.SideViewImpl5;
 import com.score.pics.client.start.StartView;
 import com.score.pics.client.start.StartViewImpl;
+import com.score.pics.client.tabletNavBlank.TabletNavViewImpl;
 
 public class ClientFactoryImpl implements ClientFactory {
 	
@@ -32,6 +34,7 @@ public class ClientFactoryImpl implements ClientFactory {
 	private SideView3 sv3;
 	private SideView4 sv4;
 	private SideView5 sv5;
+	private TabletNavViewImpl tnvi;
 //	private AddTopicView atv;
 	private String username;
 	private String actualSide;
@@ -161,7 +164,7 @@ public class ClientFactoryImpl implements ClientFactory {
 			ancestorPath = new LinkedList<String>();
 		}
 		ancestorPath.add(key);
-		printAncestorPAth();
+//		printAncestorPAth();
 	}
 	
 	@Override
@@ -169,6 +172,7 @@ public class ClientFactoryImpl implements ClientFactory {
 		if(ancestorPath==null){
 			ancestorPath = new LinkedList<String>();
 		}
+//		printAncestorPAth();
 		return ancestorPath;
 	}
 
@@ -176,14 +180,27 @@ public class ClientFactoryImpl implements ClientFactory {
 	public void deleteLastTokenAncestorPath() {
 		System.out.println("deleteLastTokenAncestorPath()");
 		ancestorPath.removeLast();
-		printAncestorPAth();
+//		printAncestorPAth();
 	}
 	
-	private void printAncestorPAth(){
-		for(int i = 0; i < ancestorPath.size(); i++){
-			System.out.print(ancestorPath.get(i)+" ; ");
+//	private void printAncestorPAth(){
+//		
+//		String build = "";
+//		
+//		for(int i = 0; i < ancestorPath.size(); i++){
+//			build = build +"" +ancestorPath.get(i)+"\n";
+//		}
+//		Window.alert("printAncestorPAth()\n"+build);
+//		
+//	}
+
+
+	@Override
+	public TabletNavViewImpl getTabletNavBlankImpl() {
+		if(tnvi==null){
+			tnvi = new TabletNavViewImpl();
 		}
-		System.out.println("");
+		return tnvi;
 	}
 	
 }

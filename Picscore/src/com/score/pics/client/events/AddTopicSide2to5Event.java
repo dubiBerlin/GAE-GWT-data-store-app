@@ -1,7 +1,7 @@
 package com.score.pics.client.events;
 
 import com.google.gwt.event.shared.GwtEvent;
-import com.score.pics.shared.TitleContentSourceProperty;
+import com.score.pics.shared.TitleContentSourcePropertyDTO;
 
 	/*
 	 * Wird vom SaveNamePassword-Widget abgefeuert und von der SaveActivity entgegen genommen.
@@ -24,17 +24,17 @@ public class AddTopicSide2to5Event extends GwtEvent<AddTopicSide2to5EventHandler
 		handler.speichern(this);
 	}
 	
-	private TitleContentSourceProperty tce;
+	private TitleContentSourcePropertyDTO tce;
 	
-	public AddTopicSide2to5Event(TitleContentSourceProperty tce){
+	public AddTopicSide2to5Event(TitleContentSourcePropertyDTO tce){
 		this.tce= tce;
 	}
 
-	public TitleContentSourceProperty getTce() {
+	public TitleContentSourcePropertyDTO getTce() {
 		return tce;
 	}
 
-	public void setTce(TitleContentSourceProperty tce) {
+	public void setTce(TitleContentSourcePropertyDTO tce) {
 		this.tce = tce;
 	}
 

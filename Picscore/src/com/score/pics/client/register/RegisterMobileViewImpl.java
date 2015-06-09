@@ -123,7 +123,7 @@ public class RegisterMobileViewImpl implements RegisterMobileView {
 		messageLabel.setHeight("4em");
 		messageLabel.getElement().setId("messageID");
 		messageLabel.setWidth("90%");
-		messageLabel.getElement().getStyle().setBackgroundColor("red");
+//		messageLabel.getElement().getStyle().setBackgroundColor("red");
 //		DOM.getElementById("messageID").getStyle().setVisibility(Visibility.HIDDEN);
 		messageLabel.getElement().getStyle().setTextAlign(TextAlign.CENTER);
 		mainPanelMobile.add(messageLabel);

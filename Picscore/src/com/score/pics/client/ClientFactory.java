@@ -11,6 +11,7 @@ import com.score.pics.client.side3.SideView3;
 import com.score.pics.client.side4.SideView4;
 import com.score.pics.client.side5.SideView5;
 import com.score.pics.client.start.StartView;
+import com.score.pics.client.tabletNavBlank.TabletNavViewImpl;
 
 public interface ClientFactory {
 
@@ -31,6 +32,8 @@ public interface ClientFactory {
 	public SideView4 getSide4ViewImpl();
 	
 	public SideView5 getSide5ViewImpl();
+	
+	public TabletNavViewImpl getTabletNavBlankImpl();
 	
 //	public AddTopicView getTopicViewWidget();
 	

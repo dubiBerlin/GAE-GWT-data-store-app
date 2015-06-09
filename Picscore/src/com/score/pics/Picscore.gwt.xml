@@ -24,7 +24,7 @@
   <inherits name='com.google.gwt.query.Query'/>
   <!-- Specify the app entry point class.      
   
-  <inherits name="com.google.gwt.inject.Inject"/>
+  <inherits name="com.google.gwt.inject.Inject"/>-->
                      -->
   <entry-point class='com.score.pics.client.Picscore'/>
 

@@ -13,13 +13,13 @@ import com.score.pics.client.ClientFactory;
 import com.score.pics.client.EntryService;
 import com.score.pics.client.EntryServiceAsync;
 import com.score.pics.client.events.AddTopicSide2to5Event;
-import com.score.pics.shared.Sides2to5Entity;
-import com.score.pics.shared.TitleContentSourceProperty;
+import com.score.pics.shared.Sides2to5EntityDTO;
+import com.score.pics.shared.TitleContentSourcePropertyDTO;
 
 public class AddTopicSide2to5Widget extends DialogOverlay {
 
 	private EntryServiceAsync service = GWT.create(EntryService.class);
-	private Sides2to5Entity se;
+	private Sides2to5EntityDTO se;
 	private EventBus eventBus;
 	// is the key of the previous entity. necessary for ancestorpath
 	private String headerTitle; 
@@ -40,10 +40,10 @@ public class AddTopicSide2to5Widget extends DialogOverlay {
 				public void onTap(TapEvent event) {
 					if(view.getTitle()!=null && !view.getTitle().equals("")){
 						
-						TitleContentSourceProperty tce = getTitleContentEntryObject();
+						TitleContentSourcePropertyDTO tce = getTitleContentEntryObject();
 						
-						service.saveTitleContentObject(se, tce, new AsyncCallback<TitleContentSourceProperty>() {
-							public void onSuccess(TitleContentSourceProperty result) {
+						service.saveTitleContentObject(se, tce, new AsyncCallback<TitleContentSourcePropertyDTO>() {
+							public void onSuccess(TitleContentSourcePropertyDTO result) {
 								
 								evenbus.fireEvent(new AddTopicSide2to5Event(result));
 								
@@ -64,20 +64,20 @@ public class AddTopicSide2to5Widget extends DialogOverlay {
 	}
 	
 
-	public Sides2to5Entity getSe() {
+	public Sides2to5EntityDTO getSe() {
 		return se;
 	}
 
 
-	public void setSe(Sides2to5Entity se) {
+	public void setSe(Sides2to5EntityDTO se) {
 		this.se = se;
 		headerTitle = se.getTitle();
 		view.setHeaderTitle(headerTitle);
 	}
 
 
-	private TitleContentSourceProperty getTitleContentEntryObject() {
-		TitleContentSourceProperty tce = new TitleContentSourceProperty();
+	private TitleContentSourcePropertyDTO getTitleContentEntryObject() {
+		TitleContentSourcePropertyDTO tce = new TitleContentSourcePropertyDTO();
 		tce.setTitle(view.getTitle());
 		tce.setContent(view.getContent());
 		tce.setQuelle(view.getSource());

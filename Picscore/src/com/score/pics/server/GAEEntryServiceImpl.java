@@ -11,7 +11,7 @@ import com.google.appengine.api.datastore.Query;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.score.pics.client.GAEEntryService;
 import com.score.pics.shared.StringResources;
-import com.score.pics.shared.TitleContentSourceProperty;
+import com.score.pics.shared.TitleContentSourcePropertyDTO;
 //import javax.servlet.http.Cookie; 
 import com.score.pics.shared.Helper;
 
@@ -83,14 +83,14 @@ public class GAEEntryServiceImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public List<TitleContentSourceProperty> getTitleContentEntries(
-			TitleContentSourceProperty object) {
+	public List<TitleContentSourcePropertyDTO> getTitleContentEntries(
+			TitleContentSourcePropertyDTO object) {
 		
 		return null;
 	}
 
 	@Override
-	public TitleContentSourceProperty saveTitleContentObjectInDS(String entity, TitleContentSourceProperty object) {
+	public TitleContentSourcePropertyDTO saveTitleContentObjectInDS(String entity, TitleContentSourcePropertyDTO object) {
 		
 		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
 		

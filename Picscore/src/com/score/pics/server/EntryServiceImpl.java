@@ -18,8 +18,8 @@ import com.google.appengine.api.datastore.Text;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.score.pics.client.EntryService;
 import com.score.pics.shared.StringResources;
-import com.score.pics.shared.Sides2to5Entity;
-import com.score.pics.shared.TitleContentSourceProperty;
+import com.score.pics.shared.Sides2to5EntityDTO;
+import com.score.pics.shared.TitleContentSourcePropertyDTO;
 
 
 public class EntryServiceImpl extends RemoteServiceServlet implements
@@ -110,14 +110,14 @@ public class EntryServiceImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public List<String> getTopicsStartSide(String username) {
+	public List<TitleContentSourcePropertyDTO> getTopicsStartSide(String username) {
 		
 		datastore = DatastoreServiceFactory.getDatastoreService();
 
 		Key key = KeyFactory.createKey("user", username);
 		
 		
-		List<String> list = new ArrayList<String>();
+		List<TitleContentSourcePropertyDTO> list = new ArrayList<TitleContentSourcePropertyDTO>();
 		
 		Query query = new Query(StringResources.startSideIdentifier(), key);
 		
@@ -126,7 +126,9 @@ public class EntryServiceImpl extends RemoteServiceServlet implements
 		
 		
 		for(Entity e:pq.asIterable()){
-			list.add(e.getProperty("eintrag").toString());
+//			list.add(e);//(e.getProperty("eintrag").toString());
+			TitleContentSourcePropertyDTO tce = new TitleContentSourcePropertyDTO();
+			tce.setTitle(e.getProperty("eintrag").toString());
 		}
 		
 		return list;
@@ -137,21 +139,16 @@ public class EntryServiceImpl extends RemoteServiceServlet implements
 	 * 
 	 * */
 	@Override
-	public List<TitleContentSourceProperty> getTopicsFromSide2To5(Sides2to5Entity s25e) {
-		
-//		String entityKind = s25e.getSide();
-//		String key_username = s25e.getUsername();
-//		
-//		
-//		Key key = KeyFactory.createKey(entityKind, key_username);
+	public List<TitleContentSourcePropertyDTO> getTopicsFromSide2To5(Sides2to5EntityDTO s25e) {
 		
 		String side  = s25e.getSide();
 		String username = s25e.getUsername();
 		List<String>ancestorPath = s25e.getAncestorPath();	
 		
-		datastore = DatastoreServiceFactory.getDatastoreService();
-		List<TitleContentSourceProperty> list = new ArrayList<TitleContentSourceProperty>();
+		printAncestorPath(ancestorPath);
 		
+		datastore = DatastoreServiceFactory.getDatastoreService();
+		List<TitleContentSourcePropertyDTO> list = new ArrayList<TitleContentSourcePropertyDTO>();
 		
 		
 		if(username !=null){
@@ -161,10 +158,10 @@ public class EntryServiceImpl extends RemoteServiceServlet implements
 			
 			List<Entity> results = datastore.prepare(users)
 					.asList(FetchOptions.Builder.withDefaults   ());
-			
-			
+		
+				
 			for(int i = 0; i < results.size(); i++){
-				TitleContentSourceProperty tce = new TitleContentSourceProperty();
+				TitleContentSourcePropertyDTO tce = new TitleContentSourcePropertyDTO();
 				tce.setTitle(results.get(i).getProperty("title").toString());
 
 				if(results.get(i).getProperty("content") instanceof Text){
@@ -173,10 +170,9 @@ public class EntryServiceImpl extends RemoteServiceServlet implements
 					tce.setContent(results.get(i).getProperty("content").toString());
 				}
 				tce.setQuelle(results.get(i).getProperty("source").toString());
-//				System.out.println("title: "+tce.getTitle());
 				
 				list.add(tce);
-			}	
+			}
 		}
 		
 	
@@ -190,7 +186,7 @@ public class EntryServiceImpl extends RemoteServiceServlet implements
 	 * 								und den Key.
 	 * 
 	 * */
-	public TitleContentSourceProperty saveTitleContentObject(Sides2to5Entity s25e,TitleContentSourceProperty object) {
+	public TitleContentSourcePropertyDTO saveTitleContentObject(Sides2to5EntityDTO s25e,TitleContentSourcePropertyDTO object) {
 		
 		//1. Überprüfen ob der neue Eintrag schon vorhanden ist
 		//   Der neue Eintrag wird über den Title definiert. Der Title ist die ID des
@@ -236,30 +232,35 @@ public class EntryServiceImpl extends RemoteServiceServlet implements
 		
 		Key key = null;
 		/* Build the Key*/
-		if(side.equals(StringResources.side2Identifier())){
-			key = new KeyFactory.Builder("benutzer", username).addChild("startside", ancestorPath.get(1)).getKey();
+		if(side.equals(StringResources.startSideIdentifier())){
+			key = KeyFactory.createKey("user", username);
 		}else{
-			if(side.equals(StringResources.side3Identifier())){
-				key = new KeyFactory.Builder("benutzer", username).
-						addChild(StringResources.startSideIdentifier(), ancestorPath.get(1)).
-						addChild(StringResources.side2Identifier(), ancestorPath.get(2)).getKey();
+			if(side.equals(StringResources.side2Identifier())){
+				key = new KeyFactory.Builder("benutzer", username).addChild("startside", ancestorPath.get(1)).getKey();
 			}else{
-				if(side.equals(StringResources.side4Identifier())){
+				if(side.equals(StringResources.side3Identifier())){
 					key = new KeyFactory.Builder("benutzer", username).
 							addChild(StringResources.startSideIdentifier(), ancestorPath.get(1)).
-							addChild(StringResources.side2Identifier(), ancestorPath.get(2)).
-							addChild(StringResources.side3Identifier(), ancestorPath.get(3)).getKey();
+							addChild(StringResources.side2Identifier(), ancestorPath.get(2)).getKey();
 				}else{
-					if(side.equals(StringResources.side5Identifier())){
+					if(side.equals(StringResources.side4Identifier())){
 						key = new KeyFactory.Builder("benutzer", username).
 								addChild(StringResources.startSideIdentifier(), ancestorPath.get(1)).
 								addChild(StringResources.side2Identifier(), ancestorPath.get(2)).
-								addChild(StringResources.side3Identifier(), ancestorPath.get(3)).
-								addChild(StringResources.side4Identifier(), ancestorPath.get(4)).getKey();
+								addChild(StringResources.side3Identifier(), ancestorPath.get(3)).getKey();
+					}else{
+						if(side.equals(StringResources.side5Identifier())){
+							key = new KeyFactory.Builder("benutzer", username).
+									addChild(StringResources.startSideIdentifier(), ancestorPath.get(1)).
+									addChild(StringResources.side2Identifier(), ancestorPath.get(2)).
+									addChild(StringResources.side3Identifier(), ancestorPath.get(3)).
+									addChild(StringResources.side4Identifier(), ancestorPath.get(4)).getKey();
+						}
 					}
 				}
 			}
 		}
+		
 		System.out.println("\nreturned key: "+key);
 		return key;
 	}
@@ -272,7 +273,7 @@ public class EntryServiceImpl extends RemoteServiceServlet implements
 	 * */
 
 	@Override
-	public TitleContentSourceProperty editTitleProperty(Sides2to5Entity s25e, String title) {
+	public TitleContentSourcePropertyDTO editTitleProperty(Sides2to5EntityDTO s25e, String title) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -325,7 +326,7 @@ public class EntryServiceImpl extends RemoteServiceServlet implements
 	
 	
 	@Override
-	public boolean delete(Sides2to5Entity s25e, TitleContentSourceProperty tcsProperty) {
+	public boolean delete(Sides2to5EntityDTO s25e, TitleContentSourcePropertyDTO tcsProperty) {
 		
 		datastore = DatastoreServiceFactory.getDatastoreService();
 		
@@ -361,7 +362,7 @@ public class EntryServiceImpl extends RemoteServiceServlet implements
 		return true;
 	}
 	
-	private void deleteSingleEntity(Sides2to5Entity s25e, TitleContentSourceProperty tcsProperty){
+	private void deleteSingleEntity(Sides2to5EntityDTO s25e, TitleContentSourcePropertyDTO tcsProperty){
 		
 		String side  = s25e.getSide();
 		String username = s25e.getUsername();
@@ -436,6 +437,7 @@ public class EntryServiceImpl extends RemoteServiceServlet implements
 	}
 	
 	private void printAncestorPath(List<String> ancestorPath){
+		System.out.print("printAncestorPath() ---> ");
 		for(int i = 0; i < ancestorPath.size(); i++){
 			System.out.print(ancestorPath.get(i)+" ; ");
 		}
@@ -445,7 +447,7 @@ public class EntryServiceImpl extends RemoteServiceServlet implements
 
 	/**/
 	@Override
-	public TitleContentSourceProperty edit(Sides2to5Entity s25e, TitleContentSourceProperty object) {
+	public TitleContentSourcePropertyDTO edit(Sides2to5EntityDTO s25e, TitleContentSourcePropertyDTO object) {
 		
 		datastore = DatastoreServiceFactory.getDatastoreService();
 		
@@ -563,7 +565,7 @@ public class EntryServiceImpl extends RemoteServiceServlet implements
 							System.out.println("Entsprechende entity gefunden");
 							storeTitleContentsourceEntity(e, object.getNew_title(), object.getContent(), object.getQuelle());
 						}
-						TitleContentSourceProperty return_object = new TitleContentSourceProperty();
+						TitleContentSourcePropertyDTO return_object = new TitleContentSourcePropertyDTO();
 						return_object.setTitle(object.getNew_title());
 						return_object.setContent(object.getContent());
 						return_object.setQuelle(object.getQuelle());

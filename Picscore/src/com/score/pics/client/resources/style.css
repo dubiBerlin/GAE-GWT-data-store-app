@@ -1,0 +1,35 @@
+.headerLabel{
+	text-align: center;
+	color: white;
+	font-size: 1.2em;
+	width: 100%;
+}
+
+.distance{
+	height: 10px;
+}
+
+.distanceSmall{
+	height: 5px;
+}
+
+.ueberschrift{
+	width: 90%;
+	color:#3498DB;
+	font-size: 1em;
+}
+
+.resultLabel{
+	text-align: center;
+	color: #3498DB;
+	font-size: 1em;
+	width: 100%;
+}
+
+.errorLabel{
+	text-align: center;
+	color: #F64747;
+	font-size: 1em;
+	width: 100%;
+}
+

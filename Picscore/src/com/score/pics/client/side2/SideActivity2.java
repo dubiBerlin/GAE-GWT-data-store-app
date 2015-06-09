@@ -10,6 +10,13 @@ import com.score.pics.shared.StringResources;
 
 public class SideActivity2 extends DetailActivity {
 
+	
+	
+	/*
+	 * Activity of Side2
+	 * 
+	 * 
+	 * */
 
 	private SideView2 view;
 	private ClientFactory clientFactory;

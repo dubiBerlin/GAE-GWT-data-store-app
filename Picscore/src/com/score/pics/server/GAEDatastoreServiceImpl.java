@@ -124,16 +124,12 @@ public class GAEDatastoreServiceImpl extends RemoteServiceServlet
 	@Override
 	public LoginUser checkSessionID(String sessionID) {
 		
-		System.out.println("checkSessionID()");
-		
 		LoginUser lg = new LoginUser();
 		HttpServletRequest request = this.getThreadLocalRequest();
 		HttpSession session = request.getSession();
 		Object object = session.getAttribute("loginUser");
 		
 		if(object!=null && object instanceof LoginUser){
-			
-			System.out.println("object instanceof LoginUser");
 
 			lg = (LoginUser)object;
 			lg.setLoggedIn(true);
