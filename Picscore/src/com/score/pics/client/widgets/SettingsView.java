@@ -5,8 +5,10 @@ import com.google.gwt.user.client.ui.IsWidget;
 import com.googlecode.mgwt.dom.client.event.tap.HasTapHandlers;
 
 public interface SettingsView extends IsWidget {
+	
 	public HasTapHandlers getCancelImageButton();
 	public HasTapHandlers getLogoutButton();
+	public HasTapHandlers getChangePasswordButton();
 	public HasTapHandlers getEditHandler();
 	public HasTapHandlers getDeleteHandler();
 	public HasTapHandlers getShareHandler();
@@ -21,5 +23,8 @@ public interface SettingsView extends IsWidget {
 	public boolean getEditValue();
 	public boolean getDeleteValue();
 	public boolean getShareValue();
+	
+	public void hide();
+	public void show();
 	
 }

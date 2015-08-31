@@ -14,7 +14,8 @@ public class RestCell implements Cell<CellContent>{
 	public interface Template extends SafeHtmlTemplates{
 		@SafeHtmlTemplates.Template("<table width='100%'>" +
 										"<tr>" +
-											"<td align='left' style='font-size:1.1em;'>{0}</td>" +
+//											"<td align='left' style='font-size:1.1em;'>{0}</td>" +
+											"<td align='left' >{0}</td>" +
 											//"<th align='left' style='bord'><h4>{0}</h4></th>" +
 										"<tr>" +
 //										"<tr>" +

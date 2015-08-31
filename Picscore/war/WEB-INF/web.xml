@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+              http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         version="2.5"
+         xmlns="http://java.sun.com/xml/ns/javaee">
+
+  <!-- Servlets -->
+    <servlet>
+    <servlet-name>gaeDatastoreServlet</servlet-name>
+    <servlet-class>com.score.pics.server.GAEDatastoreServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>gaeDatastoreServlet</servlet-name>
+    <url-pattern>/picscore/gaeDatastore</url-pattern>
+  </servlet-mapping>
+
+  <!-- Servlet für die ganzen Einträge-->
+    <servlet>
+    <servlet-name>gaeEntryServlet</servlet-name>
+    <servlet-class>com.score.pics.server.GAEEntryServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>gaeEntryServlet</servlet-name>
+    <url-pattern>/picscore/entryservice</url-pattern>
+  </servlet-mapping>
+
+  <!-- Servlet für die ganzen Einträge NEUE VERSION-->
+    <servlet>
+    <servlet-name>EntryServlet</servlet-name>
+    <servlet-class>com.score.pics.server.EntryServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>EntryServlet</servlet-name>
+    <url-pattern>/picscore/debateapp</url-pattern>
+  </servlet-mapping>
+  
+  
+  <!-- Default page to serve -->
+  <welcome-file-list>
+    <welcome-file>Picscore.html</welcome-file>
+  </welcome-file-list>
+
+</web-app>

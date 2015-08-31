@@ -99,4 +99,25 @@ public class GAEEntryServiceImpl extends RemoteServiceServlet implements
 		return null;
 	}
 
+	@Override
+	public String passwordForgotten(String email) {
+		
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+		
+		Query query = new Query("User");
+
+		PreparedQuery pq = datastore.prepare(query);
+		
+		for(Entity result : pq.asIterable()){
+			String foundEmail = (String)result.getProperty("Email");
+			
+			if(foundEmail.equals(email)){
+				
+			}
+			
+		}
+		
+		return null;
+	}
+
 }

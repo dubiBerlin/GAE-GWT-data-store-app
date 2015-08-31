@@ -1,17 +1,13 @@
 package com.score.pics.client.widgets;
 
 import com.google.gwt.core.shared.GWT;
-import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.web.bindery.event.shared.EventBus;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
-import com.googlecode.mgwt.ui.client.widget.animation.Animation;
-import com.googlecode.mgwt.ui.client.widget.animation.Animations;
 import com.googlecode.mgwt.ui.client.widget.dialog.ConfirmDialog.ConfirmCallback;
 import com.googlecode.mgwt.ui.client.widget.dialog.Dialogs;
-import com.googlecode.mgwt.ui.client.widget.dialog.overlay.DialogOverlay;
 import com.score.pics.client.ClientFactory;
 import com.score.pics.client.GAEDatastoreService;
 import com.score.pics.client.GAEDatastoreServiceAsync;
@@ -20,10 +16,9 @@ import com.score.pics.client.login.LoginPlace;
 import com.score.pics.shared.StringResources;
 
 
-public class SettingsWidgetPresenter extends DialogOverlay {
+public class SettingsWidgetPresenter {
 
 	private EventBus eventBus;
-	private ClientFactory clientFactory;
 //	private EntryServiceAsync entryService = GWT.create(EntryService.class);
 	private GAEDatastoreServiceAsync service = GWT.create(GAEDatastoreService.class);
 	private SettingsView view;
@@ -31,10 +26,9 @@ public class SettingsWidgetPresenter extends DialogOverlay {
 	
 	public SettingsWidgetPresenter(EventBus eventbus, final ClientFactory clientFactory) {
 
-		this.clientFactory = clientFactory;
 		this.eventBus = eventbus;
 		
-		view = new SettingsViewImpl();
+		view = new SettingsViewImpl();//clientFactory.getSettingsWidget();
 		
 		delete_it = false;
 		edit_it = false;
@@ -46,7 +40,7 @@ public class SettingsWidgetPresenter extends DialogOverlay {
 		
 		view.getCancelImageButton().addTapHandler(new TapHandler() {
 			public void onTap(TapEvent event) {
-				hide();
+				view.hide();
 				eventBus.fireEvent(new DeleteEditShareEvent(delete_it, edit_it, share_it));
 			}
 		});
@@ -92,6 +86,15 @@ public class SettingsWidgetPresenter extends DialogOverlay {
 			}
 		});
 		
+		view.getChangePasswordButton().addTapHandler(new TapHandler() {
+			public void onTap(TapEvent event) {
+				
+				ChangePasswordWidgetPresenter cpwp = new ChangePasswordWidgetPresenter(eventBus, clientFactory);
+				cpwp.show();
+				
+			}
+		});
+		
 		view.getLogoutButton().addTapHandler(new TapHandler() {
 			public void onTap(TapEvent event) {
 				Dialogs.confirm("Ausloggen?", "",new ConfirmCallback() {
@@ -99,7 +102,8 @@ public class SettingsWidgetPresenter extends DialogOverlay {
 							
 						service.logout(new  AsyncCallback<Void>() {
 							public void onSuccess(Void result) {
-								hide();
+								view.hide();
+								clientFactory.clearAncestorPath();
 								clientFactory.getPlaceController().goTo(new LoginPlace());
 							}
 							
@@ -119,23 +123,13 @@ public class SettingsWidgetPresenter extends DialogOverlay {
 				
 			}
 		});
-		
-		
-		add(view.asWidget());
-		
 	}
 
 
-	@Override
-	protected Animation getShowAnimation() {
-		return Animations.DISSOLVE;
-	}
 
-	@Override
-	protected Animation getHideAnimation() {
-		return Animations.DISSOLVE_REVERSE;
+	public void show(){
+		view.show();
 	}
-
 	
 	public void setValuesForAllThree(){
 		view.setDeleteValue(delete_it);

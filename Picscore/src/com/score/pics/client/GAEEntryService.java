@@ -14,5 +14,5 @@ public interface GAEEntryService extends RemoteService {
 	public List<String> getTopicsOnStartSide( String username);
 	public List<TitleContentSourcePropertyDTO> getTitleContentEntries( TitleContentSourcePropertyDTO object);
 	public TitleContentSourcePropertyDTO saveTitleContentObjectInDS(String id, TitleContentSourcePropertyDTO object);
-
+	public String passwordForgotten(String email);
 }

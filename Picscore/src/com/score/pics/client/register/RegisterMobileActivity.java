@@ -70,7 +70,7 @@ public class RegisterMobileActivity extends MGWTAbstractActivity {
 									else{
 										GQueryHelper.fadeInFadeOut(
 												"messageID", 
-												StringResources.getErrorMessage("Der Benutzername ist schon vergeben", "childID"), 
+												StringResources.getErrorMessage("Überprüfe die eingegebenen Daten", "childID"), 
 												"childID"
 										);
 									}

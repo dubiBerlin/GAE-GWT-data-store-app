@@ -1,7 +1,10 @@
 package com.score.pics.client;
 
+import java.util.List;
+
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+import com.score.pics.shared.ChangePasswordDTO;
 import com.score.pics.shared.LoginUser;
 import com.score.pics.shared.User;
 
@@ -16,7 +19,11 @@ public interface GAEDatastoreService extends RemoteService{
 	
 	public LoginUser checkSessionID(String sessionID);
 	
+	public boolean changePassword(ChangePasswordDTO pwDTO);
+	
 	public void logout();
+	
+	public boolean passwordForgotten(String email);
 	
 	
 }

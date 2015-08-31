@@ -5,7 +5,6 @@ import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.Cell;
-import com.score.pics.client.models.RestCell.Template;
 import com.score.pics.shared.CellContent;
 
 public class TabletNavCell implements Cell<CellContent> {

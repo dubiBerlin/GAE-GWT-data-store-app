@@ -21,6 +21,9 @@ public class AddTopicViewImpl implements AddTopicView{
 	private Label distance1, distance2, distance3, resultMessage;
 	private CancelImageButton close;
 	private FlexPanel mainPnl;
+
+	private GUIHelper guiHelper = new GUIHelper();
+	
 	
 	public AddTopicViewImpl() {
 		
@@ -34,7 +37,7 @@ public class AddTopicViewImpl implements AddTopicView{
 		
 		close = new CancelImageButton();
 		close.getElement().getStyle().setBackgroundColor("#3498DB");
-		HeaderPanel headerPnl = GUIHelper.getHeaderPanel("Create Topic", close, false);
+		HeaderPanel headerPnl = guiHelper.getHeaderPanel("Create Topic", close, false);
 		
 		
 		FlexPanel body = new FlexPanel();
@@ -42,19 +45,19 @@ public class AddTopicViewImpl implements AddTopicView{
 		body.setWidth("100%");
 		
 		
-		distance1 = GUIHelper.distance10PX();
+		distance1 = guiHelper.distance10PX();
 		textBox = new MTextBox();
 		textBox.getElement().getStyle().setBorderColor("#3498DB");
 		textBox.getElement().getStyle().setBorderStyle(BorderStyle.SOLID);
 		textBox.getElement().getStyle().setBorderWidth(1, Unit.PX);
 		textBox.setWidth("90%");
-		distance2 = GUIHelper.distance10PX();
+		distance2 = guiHelper.distance10PX();
 		saveBttn = new Button("Speichern");
 		saveBttn.setImportant(true);
 		saveBttn.setWidth("90%");
 				
 		saveBttn.getElement().getStyle().setBorderColor("white");
-		distance3 = GUIHelper.distance10PX();
+		distance3 = guiHelper.distance10PX();
 		
 		resultMessage = new Label();
 		resultMessage.setStyleName(AppBundle.INSTANCE.getCss().resultLabel());

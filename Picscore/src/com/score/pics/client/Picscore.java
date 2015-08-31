@@ -7,6 +7,7 @@ import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.place.shared.PlaceHistoryHandler;
 import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.googlecode.mgwt.mvp.client.AnimatingActivityManager;
 import com.googlecode.mgwt.mvp.client.AnimationMapper;
@@ -26,15 +27,16 @@ public class Picscore implements EntryPoint {
 		MGWT.applySettings(MGWTSettings.getAppSetting());
 		final ClientFactory clientFactory = new ClientFactoryImpl();
 		
+
 		
 		
-		if(!MGWT.getOsDetection().isTablet()){
-			createTabletDisplay(clientFactory);
-		}else{
+//		if(!MGWT.getOsDetection().isTablet()){
 			createPhoneDisplay(clientFactory);
-			
-			
-		}
+//		}else{
+//		    createTabletDisplay(clientFactory);
+//		}
+		
+		
 		
 		
 		AppPlaceHistoryMapper historyMapper = GWT.create(AppPlaceHistoryMapper.class);
@@ -45,7 +47,6 @@ public class Picscore implements EntryPoint {
 	
 	private void createPhoneDisplay(final ClientFactory clientFactory ){
 		AnimationWidget display = new AnimationWidget();
-		
 		PhoneActivityMapper appActivityMapper = new PhoneActivityMapper(clientFactory);
 		PhoneAnimationMapper appAnimationMapper = new PhoneAnimationMapper();
 		
@@ -53,20 +54,14 @@ public class Picscore implements EntryPoint {
 		
 		activityManager.setDisplay(display);
 		
-		History.addValueChangeHandler(new ValueChangeHandler<String>() {
-			
-			@Override
-			public void onValueChange(ValueChangeEvent<String> event) {
-				clientFactory.deleteLastTokenAncestorPath();
-				clientFactory.deleteLastTokenAncestorPath();
-			}
-		});
+
+	    deleteLastTokenAncestorPath(clientFactory);
 		
 		RootPanel.get().add(display);
 		
 	}
 	
-	 private void createTabletDisplay(ClientFactory clientFactory) {
+	 private void createTabletDisplay(final ClientFactory clientFactory) {
 
 
 		    OverlayMenu overlayMenu = new OverlayMenu();
@@ -93,8 +88,32 @@ public class Picscore implements EntryPoint {
 
 		    mainActivityManager.setDisplay(mainDisplay);
 		    overlayMenu.setDetail(mainDisplay);
-
+		    
+		    deleteLastTokenAncestorPath(clientFactory);
+		    
 		    RootPanel.get().add(overlayMenu);
 
-		  }
+	}
+	 
+	 
+	 /*
+	  * 
+	  * If the users navigates back with the back-button, the last token has to be deleted two times
+	  * 
+	  * 
+	  * */
+	 private void deleteLastTokenAncestorPath(final ClientFactory clientFactory){
+
+		    
+			History.addValueChangeHandler(new ValueChangeHandler<String>() {
+				
+				@Override
+				public void onValueChange(ValueChangeEvent<String> event) {
+					clientFactory.deleteLastTokenAncestorPath();
+					clientFactory.deleteLastTokenAncestorPath();
+				}
+			});
+	 }
+	 
+	 
 }

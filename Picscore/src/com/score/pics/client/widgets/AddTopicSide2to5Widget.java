@@ -8,6 +8,7 @@ import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
 import com.googlecode.mgwt.ui.client.widget.animation.Animation;
 import com.googlecode.mgwt.ui.client.widget.animation.Animations;
+import com.googlecode.mgwt.ui.client.widget.dialog.Dialogs;
 import com.googlecode.mgwt.ui.client.widget.dialog.overlay.DialogOverlay;
 import com.score.pics.client.ClientFactory;
 import com.score.pics.client.EntryService;
@@ -40,16 +41,21 @@ public class AddTopicSide2to5Widget extends DialogOverlay {
 				public void onTap(TapEvent event) {
 					if(view.getTitle()!=null && !view.getTitle().equals("")){
 						
-						TitleContentSourcePropertyDTO tce = getTitleContentEntryObject();
-						
-						service.saveTitleContentObject(se, tce, new AsyncCallback<TitleContentSourcePropertyDTO>() {
-							public void onSuccess(TitleContentSourcePropertyDTO result) {
-								
-								evenbus.fireEvent(new AddTopicSide2to5Event(result));
-								
-							}
-							public void onFailure(Throwable caught) {}
-						});
+						if(!titleExists(view.getTitle())){
+							
+							TitleContentSourcePropertyDTO tce = getTitleContentEntryObject();
+							
+							service.saveTitleContentObject(se, tce, new AsyncCallback<TitleContentSourcePropertyDTO>() {
+								public void onSuccess(TitleContentSourcePropertyDTO result) {
+									
+									evenbus.fireEvent(new AddTopicSide2to5Event(result));
+									
+								}
+								public void onFailure(Throwable caught) {}
+							});
+						}else{
+							Dialogs.alert("The title "+view.getTitle()+" still exists", "", null);
+						}
 					}
 				}
 			});
@@ -84,6 +90,14 @@ public class AddTopicSide2to5Widget extends DialogOverlay {
 		return tce;
 	}
 	
+	private boolean titleExists(String title){
+		for(int i=0; i<clientFactory.getCellContentList().size();i++){
+			if(title.equalsIgnoreCase(clientFactory.getCellContentList().get(i).getTitle())){
+				return true;
+			}
+		}
+		return false;
+	}
 
 	@Override
 	protected Animation getShowAnimation() {

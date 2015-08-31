@@ -1,6 +1,7 @@
 package com.score.pics.client.start;
 
 import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.web.bindery.event.shared.EventBus;
 import com.score.pics.client.ClientFactory;
@@ -26,7 +27,7 @@ public class StartActivity extends DetailActivity {
 	@Override
 	public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
 		super.start(panel, eventBus);
-		System.out.println("StartActivity()");
+		
 		view = clientFactory.getStartViewImpl();
 		
 		StartPlace place = (StartPlace)clientFactory.getPlaceController().getWhere();
@@ -51,7 +52,9 @@ public class StartActivity extends DetailActivity {
 		}
 		
 		view.setHeaderTitle(token);
+		
 		panel.setWidget(view);
+	
 	}
 	
 

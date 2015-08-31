@@ -15,8 +15,6 @@ public class TitleContentSourcePropertyDTO implements Serializable {
 	private String quelle;
 	private String new_title;
 
-	public TitleContentSourcePropertyDTO() {}
-
 	public String getTitle() {
 		return title;
 	}

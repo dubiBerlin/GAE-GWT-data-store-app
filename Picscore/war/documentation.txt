@@ -1,3 +1,6 @@
+http://127.0.0.1:9876/recompile/picscore?_callback=cback&user.agent=safari,gecko1_8,ie8,ie9,ie10
+
+
 1. 	Die User Objekte wurden in die DB eingefügt
 
 2. 	Das Password wird bei der Registrierung und im Login
@@ -97,6 +100,36 @@
 14. StartSeite soll auch von Detail erben   
 
 
+15. TABLET_VERSION
+	
+	1.
+		1.1 Die Liste im Nav-Bereich soll nur die Titel enthalten
+		1.2 
+
+
+
+16. Email implementierung
+	
+	16.1 Auf GAEDatastoreServiceImpl die Methode
+		 sendEmailRegistration(String userMail, String username) implementiert, die eine Email an den neu registrierten User
+		 verschickt.
+    
+    16.2  Email darf nur einmnal benutzt werden
+    
+    16.3 Auf der Login-Seite einen Link "Passwort vergessen" einbauen
+
+17. Passwort ändern-Widget einbauen    
+
+18. Datum und Uhrzeit bei Registrierung und der Eingabe von Einträgen speichern.
+
+	18.1 Bei SettingsWidget eine neue Option hinzufügen -> Information
+	     Bei Klick auf eine Cell in der CellList wird angezeigt wann der Eintrag getätigt worden ist.
+
+
+19. Erinnerung einbauen per Mail oder auch per Handy mit PhoneGap
+
+20. Internationalisation
+
 
 
 
@@ -121,6 +154,7 @@ Problem:
 				String einfach einfügen
 				
 Loggt sich der User das erste mal ein nach dem der Server restarted wurde, wird der Username , 			
+
 
 				
 LETZEN AUFGABEN:

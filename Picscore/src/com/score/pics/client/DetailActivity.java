@@ -37,7 +37,7 @@ import com.score.pics.shared.TitleContentSourcePropertyDTO;
 public class DetailActivity extends MGWTAbstractActivity {
 
 	private ClientFactory clientFactory;
-	public List<CellContent>list;
+	public List<CellContent>cellContentList;
 	private DetailView view;
 	private EventBus eventBus;
 	public Sides2to5EntityDTO se;
@@ -50,8 +50,10 @@ public class DetailActivity extends MGWTAbstractActivity {
 	protected boolean edit;
 	protected boolean share;
 	
+	private GUIHelper guiHelper;
 	
 	public DetailActivity(ClientFactory clientFactory, DetailView detailView){
+
 		this.clientFactory = clientFactory;
 		this.view = detailView;
 	}
@@ -61,7 +63,7 @@ public class DetailActivity extends MGWTAbstractActivity {
 	public void start(AcceptsOneWidget panel, final EventBus eventBus) {
 		
 		this.eventBus =  eventBus;
-		
+		guiHelper = new GUIHelper();
 		String sessionID = Cookies.getCookie("sid");
 		
 		if(sessionID!=null){
@@ -79,7 +81,7 @@ public class DetailActivity extends MGWTAbstractActivity {
 								
 								final int index = event.getIndex();
 								
-								String place = list.get(index).getTitle();
+								String place = cellContentList.get(index).getTitle();
 								if(delete){
 									Dialogs.confirm("Delete?", place, new ConfirmCallback() {
 										public void onOk() {
@@ -90,7 +92,7 @@ public class DetailActivity extends MGWTAbstractActivity {
 								}else{
 									if(edit){
 										
-										CellContent cc = list.get(index);
+										CellContent cc = cellContentList.get(index);
 										EditWidgetPresenter ewp = new EditWidgetPresenter(eventBus, clientFactory);
 										ewp.setCellContent(cc);
 										ewp.setSe(se);
@@ -112,6 +114,7 @@ public class DetailActivity extends MGWTAbstractActivity {
 							}
 						}));
 					}else{
+						clientFactory.clearAncestorPath();
 						clientFactory.getPlaceController().goTo(new LoginPlace());
 					}
 				}
@@ -129,7 +132,13 @@ public class DetailActivity extends MGWTAbstractActivity {
 		
 	}
 
+	/*
+	 * Have Put handler into a method
+	 * 
+	 * */
 	public void setHandler(){
+
+		/* Handler for the plus + Button for adding a new topic */
 		addHandlerRegistration(view.getImageButton().addTapHandler(new TapHandler() {
 			public void onTap(TapEvent event) {
 				AddTopicSide2to5Widget ar = new AddTopicSide2to5Widget(eventBus, clientFactory);
@@ -139,6 +148,7 @@ public class DetailActivity extends MGWTAbstractActivity {
 			}
 		}));
 		
+		/* Handler for the Settings */
 		addHandlerRegistration(view.getSettingsButton().addTapHandler(new TapHandler() {
 			public void onTap(TapEvent event) {
 				
@@ -147,6 +157,7 @@ public class DetailActivity extends MGWTAbstractActivity {
 			}
 		}));
 		
+		/*  */
 		eventBus.addHandler(AddTopicSide2to5Event.TYPE, new AddTopicSide2to5EventHandler() {
 			public void speichern(AddTopicSide2to5Event event) {
 				if(event.getTce()!=null){
@@ -180,7 +191,7 @@ public class DetailActivity extends MGWTAbstractActivity {
 		 * next side, the old entries are visible for a second.*/
 		History.addValueChangeHandler(new ValueChangeHandler<String>() {
 			public void onValueChange(ValueChangeEvent<String> event) {
-				list = new ArrayList<CellContent>();
+				cellContentList = new ArrayList<CellContent>();
 			}
 		});
 
@@ -189,19 +200,19 @@ public class DetailActivity extends MGWTAbstractActivity {
 	private void delete(final int index){
 		
 		TitleContentSourcePropertyDTO tcp = new TitleContentSourcePropertyDTO();
-		tcp.setTitle(list.get(index).getTitle());
-		tcp.setContent(list.get(index).getContent());
-		tcp.setQuelle(list.get(index).getSource());
+		tcp.setTitle(cellContentList.get(index).getTitle());
+		tcp.setContent(cellContentList.get(index).getContent());
+		tcp.setQuelle(cellContentList.get(index).getSource());
 		
 		service.delete(se, tcp, new AsyncCallback<Boolean>() {
 			
 			@Override
 			public void onSuccess(Boolean bool) {
 				if(bool.booleanValue()){
-					list.remove(index);
+					cellContentList.remove(index);
 					refreshList();
 				}else{
-					Window.alert("FALSE");
+					
 				}
 			}
 			
@@ -215,7 +226,7 @@ public class DetailActivity extends MGWTAbstractActivity {
 	
 	public void getStartList(String placeToken, String side){
 
-		list = new ArrayList<CellContent>();
+		cellContentList = new ArrayList<CellContent>();
 		
 		se = new Sides2to5EntityDTO();
 		se.setUsername(clientFactory.getUserName());
@@ -233,7 +244,37 @@ public class DetailActivity extends MGWTAbstractActivity {
 					String source = result.get(i).getQuelle()+"";
 					CellContent cc = new CellContent(title, content, source);
 					
-					list.add(cc);
+					cellContentList.add(cc);
+				}
+				refreshList();
+			}
+			public void onFailure(Throwable caught) {}
+		});
+		
+	}
+	
+	/*
+	 *
+	 * Creating CellList for the tablet-version */
+	public void getStartListTablet(String placeToken, String side){
+		
+		cellContentList = new ArrayList<CellContent>();
+		
+		se = new Sides2to5EntityDTO();
+		se.setUsername(clientFactory.getUserName());
+		se.setTitle(placeToken);
+		se.setSide(side);
+		se.setAncestorPath(clientFactory.getAncestorPath());
+		
+		
+		service.getTopicsFromSide2To5(se, new AsyncCallback<List<TitleContentSourcePropertyDTO>>() {
+			public void onSuccess(List<TitleContentSourcePropertyDTO> result) {
+				
+				for(int i = 0; i < result.size(); i++){
+					String title = result.get(i).getTitle()+"";
+					CellContent cc = new CellContent(title, "", "");
+					
+					cellContentList.add(cc);
 				}
 				refreshList();
 			}
@@ -266,9 +307,10 @@ public class DetailActivity extends MGWTAbstractActivity {
 	public void goToNextPlace(String place) {}
 	
 	private void refreshList(){
-		view.render(list);
+		view.render(cellContentList);
 		view.refresh();
-		GUIHelper.setBackGroundColorInCellList(view.getCellListWidget(), list);
+		clientFactory.setCellContentList(cellContentList);
+		guiHelper.setBackGroundColorInCellList(view.getCellListWidget(), cellContentList);
 	}
 
 	

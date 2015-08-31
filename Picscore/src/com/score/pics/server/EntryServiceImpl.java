@@ -261,7 +261,7 @@ public class EntryServiceImpl extends RemoteServiceServlet implements
 			}
 		}
 		
-		System.out.println("\nreturned key: "+key);
+		System.out.println("returned key ---> "+key);
 		return key;
 	}
 
@@ -437,7 +437,7 @@ public class EntryServiceImpl extends RemoteServiceServlet implements
 	}
 	
 	private void printAncestorPath(List<String> ancestorPath){
-		System.out.print("printAncestorPath() ---> ");
+		System.out.print("\nprintAncestorPath() ---> ");
 		for(int i = 0; i < ancestorPath.size(); i++){
 			System.out.print(ancestorPath.get(i)+" ; ");
 		}

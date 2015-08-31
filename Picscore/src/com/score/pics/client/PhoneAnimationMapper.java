@@ -5,6 +5,7 @@ import com.googlecode.mgwt.mvp.client.AnimationMapper;
 import com.googlecode.mgwt.ui.client.widget.animation.Animation;
 import com.googlecode.mgwt.ui.client.widget.animation.Animations;
 import com.score.pics.client.login.LoginPlace;
+import com.score.pics.client.passwordForgotten.PasswordForgottenPlace;
 import com.score.pics.client.register.RegisterPlace;
 import com.score.pics.client.side2.SidePlace2;
 import com.score.pics.client.side3.SidePlace3;
@@ -19,8 +20,11 @@ public class PhoneAnimationMapper implements AnimationMapper {
 		if(newPlace instanceof RegisterPlace){
 			return Animations.FADE;
 		}
-		if(newPlace instanceof LoginPlace){
-			return Animations.FADE;
+		if(newPlace instanceof PasswordForgottenPlace && oldPlace instanceof LoginPlace){
+			return Animations.SLIDE;
+		}
+		if(newPlace instanceof LoginPlace&& oldPlace instanceof PasswordForgottenPlace ){
+			return Animations.SLIDE_REVERSE;
 		}
 		if(newPlace instanceof StartPlace){
 			return Animations.FADE;
@@ -50,7 +54,7 @@ public class PhoneAnimationMapper implements AnimationMapper {
 		if(newPlace instanceof SidePlace4 && oldPlace instanceof SidePlace5){
 			return Animations.FADE_REVERSE;
 		}
-		return null;
+		return Animations.FADE;
 	}
 
 }

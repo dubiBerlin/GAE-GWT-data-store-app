@@ -1,10 +1,6 @@
 package com.score.pics.client.register;
 
-import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.TextAlign;
-import com.google.gwt.dom.client.Style.Visibility;
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.HasTapHandlers;
@@ -42,6 +38,8 @@ public class RegisterMobileViewImpl implements RegisterMobileView {
 	private Label messageLabel;
 	private Label distance1, distance2;
 	private FlexPanel newMainPnl;
+	private GUIHelper guiHelper = new GUIHelper();
+	
 	
 	private void createMobileGUI(){
 		
@@ -54,56 +52,56 @@ public class RegisterMobileViewImpl implements RegisterMobileView {
 		mainPanelMobile.setAlignment(Alignment.CENTER);
 		mainPanelMobile.setJustification(Justification.SPACE_BETWEEN);
 		
-		headerPnl = GUIHelper.getHeaderPanel("Registrierung");
+		headerPnl = guiHelper.getHeaderPanel("Registrierung");
 //		headerPnl = new HeaderPanel();
 //		headerPnl.getElement().getStyle().setBackgroundColor("#3498DB");
 //		headerPnl.setWidth("100%");
 		
 		mainPanelMobile.add(headerPnl);
 		
-		distance1 = GUIHelper.distance10PX();
+		distance1 = guiHelper.distance10PX();
 		mainPanelMobile.add(distance1);
 		
-		Label label = GUIHelper.ueberschrift("Username:");
+		Label label = guiHelper.ueberschrift("Username:");
 		label.setWidth("90%");
-		distance2 = GUIHelper.distance5PX();
+		distance2 = guiHelper.distance5PX();
 		userName = new MTextBox();
 		userName.setWidth("90%");
-		distance1 = GUIHelper.distance10PX();
+		distance1 = guiHelper.distance10PX();
 		mainPanelMobile.add(label);
 		mainPanelMobile.add(distance2);
 		mainPanelMobile.add(userName);
 		mainPanelMobile.add(distance1);
 		
-		label = GUIHelper.ueberschrift("Email:");
+		label = guiHelper.ueberschrift("Email:");
 		label.setWidth("90%");
-		distance2 = GUIHelper.distance5PX();
+		distance2 = guiHelper.distance5PX();
 		email = new MEmailTextBox();
 		email.setWidth("90%");
-		distance1 = GUIHelper.distance10PX();
+		distance1 = guiHelper.distance10PX();
 		mainPanelMobile.add(label);
 		mainPanelMobile.add(distance2);
 		mainPanelMobile.add(email);
 		mainPanelMobile.add(distance1);
 		
-		label = GUIHelper.ueberschrift("Passwort:");
+		label = guiHelper.ueberschrift("Passwort:");
 		label.setWidth("90%");
-		distance2 = GUIHelper.distance5PX();
+		distance2 = guiHelper.distance5PX();
 		password = new MPasswordTextBox();
 		password.setWidth("90%");
-		distance1 = GUIHelper.distance10PX();
+		distance1 = guiHelper.distance10PX();
 		mainPanelMobile.add(label);
 		mainPanelMobile.add(distance2);
 		mainPanelMobile.add(password);
 		mainPanelMobile.add(distance1);
 		
 		
-		label = GUIHelper.ueberschrift("Passwort wiederholen:");
+		label = guiHelper.ueberschrift("Passwort wiederholen:");
 		label.setWidth("90%");
-		distance2 = GUIHelper.distance5PX();
+		distance2 = guiHelper.distance5PX();
 		passwordRepeat = new MPasswordTextBox();
 		passwordRepeat.setWidth("90%");
-		distance1 = GUIHelper.distance10PX();
+		distance1 = guiHelper.distance10PX();
 		mainPanelMobile.add(label);
 		mainPanelMobile.add(distance2);
 		mainPanelMobile.add(passwordRepeat);
@@ -115,7 +113,7 @@ public class RegisterMobileViewImpl implements RegisterMobileView {
 		submit.setImportant(true);
 		submit.getElement().getStyle().setBorderColor("white");
 		submit.setText("Senden");
-		distance1 = GUIHelper.distance10PX();
+		distance1 = guiHelper.distance10PX();
 		mainPanelMobile.add(submit);
 		mainPanelMobile.add(distance1);
 		

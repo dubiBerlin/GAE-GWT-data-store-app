@@ -4,8 +4,11 @@ import com.google.gwt.event.logical.shared.HasValueChangeHandlers;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.HasTapHandlers;
+import com.googlecode.mgwt.ui.client.widget.animation.Animation;
+import com.googlecode.mgwt.ui.client.widget.animation.Animations;
 import com.googlecode.mgwt.ui.client.widget.button.Button;
 import com.googlecode.mgwt.ui.client.widget.button.image.CancelImageButton;
+import com.googlecode.mgwt.ui.client.widget.dialog.overlay.DialogOverlay;
 import com.googlecode.mgwt.ui.client.widget.header.HeaderPanel;
 import com.googlecode.mgwt.ui.client.widget.input.radio.MRadioButton;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexPanel;
@@ -13,20 +16,22 @@ import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexPropertyHelper.Alignm
 import com.score.pics.client.helper.GUIHelper;
 import com.score.pics.client.resources.AppBundle;
 
-public class SettingsViewImpl implements SettingsView {
+public class SettingsViewImpl  extends DialogOverlay implements SettingsView {
 	
 	private MRadioButton delete;
 	private MRadioButton edit;
 	private MRadioButton share;
-	private Button loggout;
+	private Button loggout, changePasswordBttn;
 	private CancelImageButton close;
 	private FlexPanel mainPnl;
 	private Label distance1;
-	
+	private GUIHelper guiHelper = new GUIHelper();
 
 	public SettingsViewImpl() {
 		
 		AppBundle.INSTANCE.getCss().ensureInjected();
+		AppBundle.INSTANCE.font().ensureInjected();
+		
 		
 		mainPnl = new FlexPanel();
 		mainPnl.getElement().getStyle().setBackgroundColor("white");
@@ -34,15 +39,15 @@ public class SettingsViewImpl implements SettingsView {
 		mainPnl.setAlignment(Alignment.CENTER);
 		
 		close = new CancelImageButton();
-		HeaderPanel hdrPnl = GUIHelper.getHeaderPanel("Settings", close, false);
-		distance1 = GUIHelper.distance10PX();
+		HeaderPanel hdrPnl = guiHelper.getHeaderPanel("Settings", close, false);
+		distance1 = guiHelper.distance10PX();
 		
 		mainPnl.add(hdrPnl);
 		mainPnl.add(distance1);
 		
 		mainPnl.add(getBody());
 		
-		
+		add(mainPnl);
 	}
 	
 	private FlexPanel getBody(){
@@ -59,7 +64,7 @@ public class SettingsViewImpl implements SettingsView {
 		edit.getElement().getStyle().setColor("#3498DB");
 		
 		
-		Label de1 = GUIHelper.distance10PX();
+		Label de1 = guiHelper.distance10PX();
 		
 		this.delete = new MRadioButton("Delete");
 		delete.getElement().getStyle().setColor("#3498DB");
@@ -67,14 +72,21 @@ public class SettingsViewImpl implements SettingsView {
 //		delete.setValue(true);
 		delete.setText("delete");
 		
-		Label de2 = GUIHelper.distance10PX();
+		Label de2 = guiHelper.distance10PX();
 
 		this.share = new MRadioButton("share");
 		share.getElement().getStyle().setColor("#3498DB");
 		share.setWidth("90%");
 		share.setText("share");
 		
-		Label de3 = GUIHelper.distance10PX();
+		Label de3 = guiHelper.distance10PX();
+		changePasswordBttn = new Button("Passwort ändern");
+		changePasswordBttn.setWidth("90%");
+		changePasswordBttn.getElement().getStyle().setBackgroundColor("#828a82");
+		changePasswordBttn.getElement().getStyle().setBorderColor("white");
+		changePasswordBttn.getElement().getStyle().setColor("white");
+		
+		Label de4 = guiHelper.distance10PX();
 		loggout = new Button("Logout");
 		loggout.setWidth("90%");
 		loggout.getElement().getStyle().setBackgroundColor("#eb8c98");
@@ -87,6 +99,8 @@ public class SettingsViewImpl implements SettingsView {
 		body.add(de2);
 		body.add(share);
 		body.add(de3);
+		body.add(changePasswordBttn);
+		body.add(de4);
 		body.add(loggout);
 		
 		return body;
@@ -155,6 +169,33 @@ public class SettingsViewImpl implements SettingsView {
 	@Override
 	public HasTapHandlers getLogoutButton() {
 		return loggout;
+	}
+
+
+	@Override
+	protected Animation getShowAnimation() {
+		return Animations.DISSOLVE;
+	}
+
+	@Override
+	protected Animation getHideAnimation() {
+		return Animations.DISSOLVE_REVERSE;
+	}
+
+	
+	@Override
+	public void hide() {
+		super.hide();
+	}
+	
+	@Override
+	public void show() {
+		super.show();
+	}
+
+	@Override
+	public HasTapHandlers getChangePasswordButton() {
+		return changePasswordBttn;
 	}
 
 }

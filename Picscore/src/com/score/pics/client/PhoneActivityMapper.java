@@ -5,6 +5,8 @@ import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.gwt.place.shared.Place;
 import com.score.pics.client.login.LoginActivity;
 import com.score.pics.client.login.LoginPlace;
+import com.score.pics.client.passwordForgotten.PasswordForgottenActivity;
+import com.score.pics.client.passwordForgotten.PasswordForgottenPlace;
 import com.score.pics.client.register.RegisterMobileActivity;
 import com.score.pics.client.register.RegisterPlace;
 import com.score.pics.client.side2.SideActivity2;
@@ -52,6 +54,9 @@ public class PhoneActivityMapper implements ActivityMapper {
 		}
 		if(place instanceof SidePlace5){
 			return new SideActivity5(clientFactory);
+		}
+		if(place instanceof PasswordForgottenPlace){
+			return new  PasswordForgottenActivity(clientFactory);
 		}
 		return null;
 	}

@@ -17,12 +17,13 @@ import java.util.List;
 	 * 
 	 * */
 
+@SuppressWarnings("serial")
 public class Sides2to5EntityDTO implements Serializable{
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final int serialVersionUID = (int) 1L;
 
 	private String title;
 	// for the Entity ancestor path. this is the key of the previous side
@@ -30,8 +31,6 @@ public class Sides2to5EntityDTO implements Serializable{
 	private String side;
 	private String username;
 	private List<String>ancestorPath;
-	
-	public Sides2to5EntityDTO() {}
 
 
 	public List<String> getAncestorPath() {

@@ -1,35 +1,34 @@
 .headerLabel{
 	text-align: center;
 	color: white;
-	font-size: 1.2em;
+	font-size: 2em;
 	width: 100%;
+	font-family: value('font.getFontName')
 }
 
 .distance{
-	height: 10px;
+	height: 15px;
 }
 
 .distanceSmall{
-	height: 5px;
+	height: 10px;
 }
 
 .ueberschrift{
 	width: 90%;
 	color:#3498DB;
-	font-size: 1em;
+	font-size: 1.5em;
+	font-family: value('font.getFontName')
 }
 
 .resultLabel{
 	text-align: center;
 	color: #3498DB;
-	font-size: 1em;
+	font-size: 1.5em;
 	width: 100%;
+	font-family: value('font.getFontName')
 }
 
-.errorLabel{
-	text-align: center;
-	color: #F64747;
-	font-size: 1em;
-	width: 100%;
-}
+
+
 

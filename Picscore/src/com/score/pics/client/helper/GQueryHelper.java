@@ -15,16 +15,34 @@ public class GQueryHelper {
 		if($("#"+parentId).children().isEmpty()){
 			$("#"+parentId).as(Effects).append($(childDiv)).hide().fadeIn(3000, new Function(){
 				public void f() {
-			        
-					$("#"+childId).fadeOut(new Function(){
-						public void f() {
-							$(this).remove();
-						}
-					});
+					fadeOut(childId);
+//					$("#"+childId).fadeOut(new Function(){
+//						public void f() {
+//							$(this).remove();
+//						}
+//					});
 			      }
 			});
 		}
 	}
+	
+	public static void fadeIn(String parentId, String childDiv, final String childId){
+		if($("#"+parentId).children().isEmpty()){
+			$("#"+parentId).as(Effects).append($(childDiv)).hide().fadeIn(3000, new Function(){
+				public void f() {
+					
+					
+				}
+			});
+		}
+	}
 
+	public static void fadeOut(String childId){
+		$("#"+childId).fadeOut(new Function(){
+			public void f() {
+				$(this).remove();
+			}
+		});
+	}
 
 }

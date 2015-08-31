@@ -4,11 +4,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.google.gwt.place.shared.PlaceController;
-import com.google.gwt.user.client.Window;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 import com.score.pics.client.login.LoginView;
 import com.score.pics.client.login.LoginViewImpl;
+import com.score.pics.client.passwordForgotten.PasswordForgottenView;
+import com.score.pics.client.passwordForgotten.PasswordForgottenViewImpl;
 import com.score.pics.client.register.RegisterMobileView;
 import com.score.pics.client.register.RegisterMobileViewImpl;
 import com.score.pics.client.side2.SideView2;
@@ -21,7 +22,14 @@ import com.score.pics.client.side5.SideView5;
 import com.score.pics.client.side5.SideViewImpl5;
 import com.score.pics.client.start.StartView;
 import com.score.pics.client.start.StartViewImpl;
+import com.score.pics.client.tablet.TabletMainContentPresentationView;
+import com.score.pics.client.tablet.TabletMainContentPresentationViewImpl;
 import com.score.pics.client.tabletNavBlank.TabletNavViewImpl;
+import com.score.pics.client.widgets.ChangePasswordView;
+import com.score.pics.client.widgets.ChangePasswordViewImpl;
+import com.score.pics.client.widgets.SettingsView;
+import com.score.pics.client.widgets.SettingsViewImpl;
+import com.score.pics.shared.CellContent;
 
 public class ClientFactoryImpl implements ClientFactory {
 	
@@ -34,13 +42,20 @@ public class ClientFactoryImpl implements ClientFactory {
 	private SideView3 sv3;
 	private SideView4 sv4;
 	private SideView5 sv5;
-	private TabletNavViewImpl tnvi;
+	private SettingsView settings;
+	private ChangePasswordView changePasswordView;
+	private PasswordForgottenView passwordForgotten;
 //	private AddTopicView atv;
 	private String username;
 	private String actualSide;
 	private String idOFPreviousSide; // its the id of the previousside
 	private LinkedList<String> ancestorPath;
+	private List<CellContent> cellContentList;
 	
+	// Tablet Stuff
+
+	private TabletNavViewImpl tabletNavBlank;
+	private TabletMainContentPresentationView tabletMainBlank;
 	
 	public ClientFactoryImpl() {
 		eventBus = new SimpleEventBus();
@@ -172,15 +187,19 @@ public class ClientFactoryImpl implements ClientFactory {
 		if(ancestorPath==null){
 			ancestorPath = new LinkedList<String>();
 		}
-//		printAncestorPAth();
 		return ancestorPath;
 	}
 
 	@Override
 	public void deleteLastTokenAncestorPath() {
-		System.out.println("deleteLastTokenAncestorPath()");
+//		System.out.println("deleteLastTokenAncestorPath()");
 		ancestorPath.removeLast();
 //		printAncestorPAth();
+	}
+
+	@Override
+	public void clearAncestorPath() {
+		ancestorPath.clear();
 	}
 	
 //	private void printAncestorPAth(){
@@ -197,10 +216,60 @@ public class ClientFactoryImpl implements ClientFactory {
 
 	@Override
 	public TabletNavViewImpl getTabletNavBlankImpl() {
-		if(tnvi==null){
-			tnvi = new TabletNavViewImpl();
+		if(tabletNavBlank==null){
+			tabletNavBlank= new TabletNavViewImpl();
 		}
-		return tnvi;
+		return tabletNavBlank;
 	}
+
+
+	@Override
+	public SettingsView getSettingsWidget() {
+		if(settings==null){
+			settings = new SettingsViewImpl();
+		}
+		return settings;
+	}
+
+
+	@Override
+	public TabletMainContentPresentationView getTabletMainBlankImpl() {
+		if(tabletMainBlank == null){
+			tabletMainBlank = new TabletMainContentPresentationViewImpl();
+		}
+		return tabletMainBlank;
+	}
+
+
+	@Override
+	public void setCellContentList(List<CellContent> list) {
+		this.cellContentList = list;
+	}
+
+
+	@Override
+	public List<CellContent> getCellContentList() {
+		return cellContentList;
+	}
+
+
+	@Override
+	public ChangePasswordView getChangePasswordViewImpl() {
+		if(changePasswordView==null){
+			changePasswordView = new ChangePasswordViewImpl();
+		}
+		return changePasswordView;
+	}
+
+
+	@Override
+	public PasswordForgottenView getPasswordForgottenViewImpl() {
+		if(passwordForgotten==null){
+			passwordForgotten = new PasswordForgottenViewImpl();
+		}
+		return passwordForgotten;
+	}
+
+
 	
 }

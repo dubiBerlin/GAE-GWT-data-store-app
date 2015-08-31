@@ -2,7 +2,6 @@ package com.score.pics.client;
 
 import java.util.List;
 
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.HasTapHandlers;
@@ -15,6 +14,7 @@ import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexPanel;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 import com.score.pics.client.helper.GUIHelper;
 import com.score.pics.client.models.RestCell;
+import com.score.pics.client.resources.AppBundle;
 import com.score.pics.shared.CellContent;
 
 public class DetailViewImpl implements DetailView {
@@ -29,15 +29,17 @@ public class DetailViewImpl implements DetailView {
 	
 	public DetailViewImpl() {
 
+		GUIHelper guiHelper = new GUIHelper();
+		AppBundle.INSTANCE.font().ensureInjected();
 		mainPanel = new FlexPanel();
 		mainPanel.setSize("100%", "100%");
 		
 		imageBttn = new NewImageButton();
 		headerLabel = new Label();
+		
 		settingsBttn = new StorageImageButton();
-		
-		headerpanel = GUIHelper.getHeaderPanel( headerLabel,imageBttn, settingsBttn);
-		
+		headerpanel = guiHelper.getHeaderPanel( headerLabel,imageBttn, settingsBttn);		
+	
 		
 		scrollPanel = new ScrollPanel();
 		scrollPanel.setSize("100%", "100%");

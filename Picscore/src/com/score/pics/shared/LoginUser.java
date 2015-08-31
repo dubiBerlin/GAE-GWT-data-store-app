@@ -13,8 +13,6 @@ public class LoginUser implements Serializable {
 	private String sessionID;
 	private boolean loggedIn;
 	
-	
-	public LoginUser() {}
 
 	public String getUsername() {
 		return username;

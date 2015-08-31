@@ -9,6 +9,5 @@ public interface CSS extends CssResource {
 	public String distanceSmall();
 	public String ueberschrift();
 	public String resultLabel();
-	public String errorLabel();
 	
 }

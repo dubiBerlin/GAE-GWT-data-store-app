@@ -11,7 +11,7 @@ import com.score.pics.client.resources.AppBundle;
 public class GUIHelper {
 
 	
-	public static HeaderPanel getHeaderPanel(String text){
+	public HeaderPanel getHeaderPanel(String text){
 		HeaderPanel headerPanel = new HeaderPanel();
 		headerPanel.getElement().getStyle().setBackgroundColor("#3498DB");
 		headerPanel.setWidth("100%");
@@ -24,7 +24,7 @@ public class GUIHelper {
 		return headerPanel;
 	}
 	
-	public static HeaderPanel getHeaderPanel(String text, Widget widget1, Widget widget2){
+	public HeaderPanel getHeaderPanel(String text, Widget widget1, Widget widget2){
 		HeaderPanel headerPanel = new HeaderPanel();
 		headerPanel.getElement().getStyle().setBackgroundColor("#3498DB");
 		headerPanel.setWidth("100%");
@@ -42,8 +42,12 @@ public class GUIHelper {
 	
 	/*
 	 * boolean gibt an ob das Widget links oder rechts vom Label stehen soll
+	 * 
+	 * True = Widget left of label
+	 * false = Widget right of label
+	 * 
 	 * */
-	public static HeaderPanel getHeaderPanel(String text, Widget widget1, boolean left_or_right){
+	public HeaderPanel getHeaderPanel(String text, Widget widget1, boolean left_or_right){
 		HeaderPanel headerPanel = new HeaderPanel();
 		headerPanel.getElement().getStyle().setBackgroundColor("#3498DB");
 		headerPanel.setWidth("100%");
@@ -66,7 +70,29 @@ public class GUIHelper {
 	/*
 	 * boolean gibt an ob das Widget links oder rechts vom Label stehen soll
 	 * */
-	public static HeaderPanel getHeaderPanel(Label label, Widget widget1, Widget widget2){
+	public HeaderPanel getHeaderPanel(Label label, Widget widget1, boolean left_or_right){
+		HeaderPanel headerPanel = new HeaderPanel();
+		headerPanel.getElement().getStyle().setBackgroundColor("#3498DB");
+		headerPanel.setWidth("100%");
+		
+		label.setStyleName(AppBundle.INSTANCE.getCss().headerLabel());
+		
+		if(left_or_right){
+			headerPanel.add(widget1);
+			headerPanel.add(label);
+			
+		}else{
+			headerPanel.add(label);
+			headerPanel.add(widget1);
+		}
+		
+		return headerPanel;
+	}
+	
+	/*
+	 * boolean gibt an ob das Widget links oder rechts vom Label stehen soll
+	 * */
+	public HeaderPanel getHeaderPanel(Label label, Widget widget1, Widget widget2){
 		HeaderPanel headerPanel = new HeaderPanel();
 		headerPanel.getElement().getStyle().setBackgroundColor("#3498DB");
 		headerPanel.setWidth("100%");
@@ -80,7 +106,7 @@ public class GUIHelper {
 		return headerPanel;
 	}
 	
-	public static HeaderPanel getHeaderPanel(Label label){
+	public HeaderPanel getHeaderPanel(Label label){
 		HeaderPanel headerPanel = new HeaderPanel();
 		headerPanel.getElement().getStyle().setBackgroundColor("#3498DB");
 		headerPanel.setWidth("100%");
@@ -92,36 +118,43 @@ public class GUIHelper {
 		return headerPanel;
 	}
 	
-	public static Label distance10PX(){
+	public Label distance10PX(){
 		Label distance = new Label();
 		distance.setStyleName(AppBundle.INSTANCE.getCss().distance());
 		
 		return distance;
 	}
 	
-	public static Label distance5PX(){
+	public Label distance5PX(){
 		Label distance = new Label();
 		distance.setStyleName(AppBundle.INSTANCE.getCss().distanceSmall());
 		
 		return distance;
 	}
 	
-	public static Label ueberschrift(String text){
+	public Label ueberschrift(String text){
 		Label distance = new Label(text);
 		distance.setStyleName(AppBundle.INSTANCE.getCss().ueberschrift());
 		
 		return distance;
 	}
 	
-	public static Label errorLabel(){
+	public Label errorLabel(){
 		Label error = new Label();
-		error.setStyleName(AppBundle.INSTANCE.getCss().errorLabel());
+		error.setStyleName(AppBundle.INSTANCE.getCss().resultLabel());
 		
 		return error;
 	}
 	
+	public Label resultLabel(){
+		Label result = new Label();
+		result.setStyleName(AppBundle.INSTANCE.getCss().resultLabel());
+		
+		return result;
+	}
 	
-	public static void setBackGroundColorInCellList(CellList cellList, List list){
+	
+	public void setBackGroundColorInCellList(CellList cellList, List list){
 		for(int i = 0; i < list.size(); i++){
 		   cellList.getElement().getElementsByTagName("li").getItem(i).getStyle().setBackgroundColor("white");
 	       cellList.getElement().getElementsByTagName("li").getItem(i).getStyle().setColor("#1F3A93");//3498DB

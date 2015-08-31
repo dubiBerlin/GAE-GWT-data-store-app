@@ -26,6 +26,7 @@ public class AddTopicSide2to5ViewImpl implements AddTopicSide2to5View{
 	private CancelImageButton close;
 	private FlexPanel mainPnl, body;
 	private HeaderPanel headerPnl;
+	private GUIHelper guiHelper = new GUIHelper();
 	
 	public AddTopicSide2to5ViewImpl() {
 		
@@ -47,41 +48,41 @@ public class AddTopicSide2to5ViewImpl implements AddTopicSide2to5View{
 		body.setWidth("100%");
 		
 		
-		distance1 = GUIHelper.distance10PX();
-		titleHeader = GUIHelper.ueberschrift("Title");
+		distance1 = guiHelper.distance10PX();
+		titleHeader = guiHelper.ueberschrift("Title");
 		titleTxtBox = new MTextBox();
 		titleTxtBox.getElement().getStyle().setBorderColor("#3498DB");
 		titleTxtBox.getElement().getStyle().setBorderStyle(BorderStyle.SOLID);
 		titleTxtBox.getElement().getStyle().setBorderWidth(1, Unit.PX);
 		titleTxtBox.setWidth("90%");
 		
-		distance2 = GUIHelper.distance10PX();
-		contentHeader = GUIHelper.ueberschrift("Content");
+		distance2 = guiHelper.distance10PX();
+		contentHeader = guiHelper.ueberschrift("Content");
 		textBox = new MTextArea();
 		textBox.getElement().getStyle().setBorderColor("#3498DB");
 		textBox.getElement().getStyle().setBorderStyle(BorderStyle.SOLID);
 		textBox.getElement().getStyle().setBorderWidth(1, Unit.PX);
 		textBox.setWidth("90%");
 		
-		distance5 = GUIHelper.distance10PX();
-		sourceHeader = GUIHelper.ueberschrift("Source");
+		distance5 = guiHelper.distance10PX();
+		sourceHeader = guiHelper.ueberschrift("Source");
 		sourceBox = new MTextBox();
 		sourceBox.getElement().getStyle().setBorderColor("#3498DB");
 		sourceBox.getElement().getStyle().setBorderStyle(BorderStyle.SOLID);
 		sourceBox.getElement().getStyle().setBorderWidth(1, Unit.PX);
 		sourceBox.setWidth("90%");
 		
-		distance2 = GUIHelper.distance10PX();
+		distance2 = guiHelper.distance10PX();
 		saveBttn = new Button("Speichern");
 		saveBttn.setImportant(true);
 		saveBttn.setWidth("90%");
 		
 
 		
-		distance3 = GUIHelper.distance10PX();
+		distance3 = guiHelper.distance10PX();
 		saveBttn.getElement().getStyle().setBorderColor("white");
 		
-		distance4 = GUIHelper.distance10PX();
+		distance4 = guiHelper.distance10PX();
 		
 		resultMessage = new Label();
 		resultMessage.setStyleName(AppBundle.INSTANCE.getCss().resultLabel());
@@ -144,7 +145,7 @@ public class AddTopicSide2to5ViewImpl implements AddTopicSide2to5View{
 
 	@Override
 	public void setHeaderTitle(String text) {
-		headerPnl = GUIHelper.getHeaderPanel("new entry for "+text, close, false);
+		headerPnl = guiHelper.getHeaderPanel("new entry for "+text, close, false);
 		mainPnl.add(headerPnl);
 		mainPnl.add(body);
 	}

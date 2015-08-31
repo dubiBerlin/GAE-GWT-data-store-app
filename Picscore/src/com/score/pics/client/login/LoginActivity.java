@@ -3,6 +3,10 @@ package com.score.pics.client.login;
 import java.util.Date;
 
 import com.google.gwt.core.shared.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.TouchStartEvent;
+import com.google.gwt.event.dom.client.TouchStartHandler;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
@@ -13,6 +17,7 @@ import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
 import com.score.pics.client.ClientFactory;
 import com.score.pics.client.GAEDatastoreService;
 import com.score.pics.client.GAEDatastoreServiceAsync;
+import com.score.pics.client.passwordForgotten.PasswordForgottenPlace;
 import com.score.pics.client.register.RegisterPlace;
 import com.score.pics.client.start.StartPlace;
 import com.score.pics.shared.Helper;
@@ -34,18 +39,18 @@ public class LoginActivity extends MGWTAbstractActivity {
 	
 	@Override
 	public void start(final AcceptsOneWidget panel, EventBus eventBus) {
-		
+				
 		view = clientFactory.getLoginViewImpl();
 		
 		String sessionID = Cookies.getCookie("sid");
-		
+//		clientFactory.clearAncestorPath();
 		/*
 		 * Ist Cookie gesetzt navigiere zur Start Seite
 		 * */
 		if(sessionID!=null){
+			
 			service.checkSessionID(sessionID, new AsyncCallback<LoginUser>() {
 				public void onSuccess(LoginUser result) {
-					
 					if(result.isLoggedIn()){
 						clientFactory.setUserName(result.getUsername());
 						clientFactory.getPlaceController().goTo(new StartPlace(result.getUsername()));
@@ -62,9 +67,11 @@ public class LoginActivity extends MGWTAbstractActivity {
 		}else{
 			buildGUI(panel);
 		}
+		
 	}
 	
 	private void buildGUI(AcceptsOneWidget panel){
+		
 		addHandlerRegistration(view.getLoginButton().addTapHandler(new TapHandler() {
 			public void onTap(TapEvent event) {
 				
@@ -74,8 +81,9 @@ public class LoginActivity extends MGWTAbstractActivity {
 						String username = view.getUsername();
 						String password = Helper.encryptPasswort(view.getPassword(), StringResources.getGwtDesKey());
 						
-						executeLogin(username, password);
-						
+						if(username.trim().length()>0 && password.trim().length()>0){
+							executeLogin(username, password);
+						}
 					}
 				}				
 			}
@@ -88,6 +96,23 @@ public class LoginActivity extends MGWTAbstractActivity {
 				
 			}
 		}));
+		
+		addHandlerRegistration(view.getNewPasswordLabel().addTouchStartHandler(new TouchStartHandler() {
+			public void onTouchStart(TouchStartEvent event) {
+				
+
+				clientFactory.getPlaceController().goTo(new PasswordForgottenPlace(clientFactory.getUserName()));
+			}
+		}));
+		
+		addHandlerRegistration(view.getNewPasswordClickLabel().addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				clientFactory.getPlaceController().goTo(new PasswordForgottenPlace(clientFactory.getUserName()));
+			}
+		}));
+		
 		panel.setWidget(view);
 	}
 	
